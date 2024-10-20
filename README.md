@@ -4,7 +4,7 @@ The **lagden.dev API** offers a variety of public endpoints designed to integrat
 
 ## Features
 
-- **Discord Profile & Presence Watcher**: Tracks and retrieves a Discord user's profile, presence status, and activities.
+- **Discord Profile & Presence Watcher**: Retrieves a Discord user's profile, presence status, and activities stored in the database.
 - _(Future Feature Placeholder)_: Other features and integrations will be added to the API in future releases.
 
 ---
@@ -13,7 +13,7 @@ The **lagden.dev API** offers a variety of public endpoints designed to integrat
 
 ### 1. **Discord Profile & Presence Watcher**
 
-This endpoint retrieves real-time updates about a Discord user's profile, including their username, avatar, current status, and any ongoing activities (like Spotify or Visual Studio Code usage).
+This endpoint retrieves real-time updates about a Discord user's profile, including their username, avatar, current status, and any ongoing activities (such as Spotify or Visual Studio Code usage). This data is provided from the MongoDB database, which is populated by the `ricksanchez` bot system.
 
 **Endpoint:**
 
@@ -52,7 +52,7 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
           "small_image": "https://cdn.discordapp.com/app-assets/383226320970055681/565945770067623946.png",
           "small_text": "Visual Studio Code"
         },
-        "created_at": "2024-10-20T14:10:07.074000+00:00",
+        "created_at": "2024-10-20T14:35:10.280000+00:00",
         "details": "Editing projects.json",
         "name": "Visual Studio Code",
         "state": "Workspace: lagden.dev [SSH: ldev-vps]",
@@ -71,21 +71,21 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
           "hex": "#1db954",
           "r": 29
         },
-        "created_at": "2024-10-20T14:08:22.724000+00:00",
+        "created_at": "2024-10-20T14:35:10.280000+00:00",
         "party_id": "spotify:1277005773230313474",
-        "title": "SUICIDE",
+        "title": "LIKE A TATTOO (Jersey Club)",
         "type": "Spotify"
       },
       "album": {
-        "cover_url": "https://i.scdn.co/image/ab67616d0000b273bd3c709750979bf08e560ccb",
-        "name": "SUICIDE"
+        "cover_url": "https://i.scdn.co/image/ab67616d0000b2735a922551cdfda94be49fbdf8",
+        "name": "Ocean One, Vol. 3 (A Jersey Club Mixtape)"
       },
       "track": {
-        "artists": ["Kill Dyll", "Jasiah"],
-        "end": "2024-10-20T14:10:46.826000+00:00",
-        "name": "SUICIDE",
-        "start": "2024-10-20T14:08:17.062000+00:00",
-        "url": "https://open.spotify.com/track/7cfqUMbEL0oAUvgNMQT1Oo"
+        "artists": ["DJ SoulChild AC"],
+        "end": "2024-10-20T14:37:39.731000+00:00",
+        "name": "LIKE A TATTOO (Jersey Club)",
+        "start": "2024-10-20T14:35:09.732000+00:00",
+        "url": "https://open.spotify.com/track/4v5F7sJgQgtjQ2PLZ1Gzww"
       }
     },
     "statuses": {
@@ -114,6 +114,7 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
     },
     "created_at": "2024-08-24T20:45:01.958000+00:00",
     "discriminator": "0",
+    "display_avatar": "https://cdn.discordapp.com/avatars/1277005773230313474/878d4c9db5d644ec902c4bb0b8346b8c.png?size=1024",
     "display_name": "Zach",
     "global_name": "Zach",
     "id": 1277005773230313474,
@@ -179,6 +180,8 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
      PORT=8080
      ```
 
+   - Make sure your MongoDB instance is running and populated with presence data from the [ricksanchez](https://github.com/Lagden-Development/ricksanchez) system.
+
 5. Running the application:
 
    - For development:
@@ -187,11 +190,17 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
      python app.py
      ```
 
-   - To serve the application using **Waitress** (for production):
+   - To serve the application using **Gunicorn** (for production):
 
      ```bash
-     python serve.py
+     python -m gunicorn -w 4 -b 0.0.0.0:8080 app:app
      ```
+
+---
+
+### Data Collection System
+
+This API **does not** handle the collection of Discord profile or presence data. The data displayed by this API is stored in MongoDB, which is populated by the **[ricksanchez](https://github.com/Lagden-Development/ricksanchez)** project. Ensure that `ricksanchez` is set up and running to collect the necessary data before using this API.
 
 ---
 
