@@ -1,3 +1,7 @@
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/1m00j.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+![GitHub branch check runs](https://img.shields.io/github/check-runs/Lagden-Development/api.lagden.dev/main)
+![Codacy Badge](https://app.codacy.com/project/badge/Grade/2a5ad2b748a6458eb86d9a13b3592794)
+
 # lagden.dev API
 
 The **lagden.dev API** offers a variety of public endpoints designed to integrate with external platforms and services. One key feature is the **Discord Profile & Presence Watcher**, which monitors and retrieves real-time updates of Discord user profiles and activities. The API is designed to be easily extendable, with future features planned.
