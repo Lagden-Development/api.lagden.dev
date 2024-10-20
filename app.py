@@ -36,13 +36,6 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_port=1)
 Minify(app)
 
 
-# Pass the config to the templates
-@app.context_processor
-def inject_global_variable():
-    global CONFIG
-    return dict(CONFIG=CONFIG)
-
-
 # Custom Error Handlers
 @app.errorhandler(404)
 def page_not_found(e):
@@ -58,7 +51,6 @@ app.register_blueprint(watcher.blueprint)
 # Run the built-in development server when ran as a script.
 if __name__ == "__main__":
     app.run(
-        debug=True,
-        host=os.getenv("HOST", "0.0.0.0"),
+        host=os.getenv("HOST", None),
         port=os.getenv("PORT", 5000),
     )
