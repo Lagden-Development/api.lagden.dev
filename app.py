@@ -5,6 +5,9 @@ You may not use, copy, distribute, modify, or sell this code without the express
 
 # Import the required modules
 
+# Python Standard Library
+import os
+
 # Third Party Modules
 from werkzeug.middleware.proxy_fix import ProxyFix
 from dotenv import load_dotenv
@@ -56,5 +59,6 @@ app.register_blueprint(watcher.blueprint)
 if __name__ == "__main__":
     app.run(
         debug=True,
-        port=40000,
+        host=os.getenv("HOST", "0.0.0.0"),
+        port=os.getenv("PORT", 5000),
     )
