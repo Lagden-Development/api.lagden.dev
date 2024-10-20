@@ -10,7 +10,10 @@ import os
 
 # Third Party Modules
 from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+from dotenv import load_dotenv
+
+# Load the environment variables
+load_dotenv()
 
 client = MongoClient(os.getenv("MONGODB_URI"))
 
