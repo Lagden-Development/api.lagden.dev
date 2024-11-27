@@ -1,6 +1,6 @@
 """
-(c) 2024 Zachariah Michael Lagden (All Rights Reserved)
-You may not use, copy, distribute, modify, or sell this code without the express permission of the author.
+This project is licensed under a non-commercial open-source license.
+View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
 """
 
 # Import the required modules
