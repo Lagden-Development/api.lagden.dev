@@ -9,11 +9,18 @@ The **lagden.dev API** offers a variety of public endpoints designed to integrat
 ## Features
 
 - **Discord Profile & Presence Watcher**: Retrieves a Discord user's profile, presence status, and activities stored in the database.
+- **OpenAPI Documentation**: Interactive API documentation available at `/docs` and `/redoc`
 - _(Future Feature Placeholder)_: Other features and integrations will be added to the API in future releases.
 
 ---
 
-## API Endpoints
+## API Documentation
+
+The API provides interactive documentation through Swagger UI and ReDoc:
+
+- **Swagger UI**: Access at `/docs` for interactive API testing
+- **ReDoc**: Access at `/redoc` for detailed API documentation
+- **OpenAPI Schema**: Available at `/openapi.json`
 
 ### 1. **Discord Profile & Presence Watcher**
 
@@ -191,13 +198,13 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
    - For development:
 
      ```bash
-     python app.py
+     uvicorn main:app --reload --host 0.0.0.0 --port 8080
      ```
 
-   - To serve the application using **Gunicorn** (for production):
+   - For production:
 
      ```bash
-     python -m gunicorn -w 4 -b 0.0.0.0:8080 app:app
+     uvicorn main:app --host 0.0.0.0 --port 8080 --workers 4
      ```
 
 ---
