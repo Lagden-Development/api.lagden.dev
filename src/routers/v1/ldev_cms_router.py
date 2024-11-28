@@ -3,13 +3,13 @@ This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
 """
 
-from typing import List, Optional, Dict
-from pydantic import BaseModel, Field
+import os
+import logging
+from typing import List, Optional
+from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 import contentful
-import os
-import logging
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -21,11 +21,34 @@ router = APIRouter()
 
 # Pydantic models for response validation
 class Link(BaseModel):
+    """
+    Represents a hyperlink with a name and URL.
+
+    Attributes:
+        url (str): The URL of the link
+        name (str): The display name of the link
+    """
+
     url: str
     name: str
 
 
 class Person(BaseModel):
+    """
+    Represents a person's profile with their personal and professional information.
+
+    Attributes:
+        name (str): The person's full name
+        slug (str): URL-friendly version of the name
+        occupation (str): The person's job title or role
+        location (str): The person's geographical location
+        pronouns (str): The person's preferred pronouns
+        skills (List[str]): List of the person's skills or expertise
+        links (List[Link]): List of relevant links (e.g., social media, portfolio)
+        introduction (dict): Rich text content containing the person's introduction
+        picture_url (str): URL to the person's profile picture
+    """
+
     name: str
     slug: str
     occupation: str
@@ -38,6 +61,22 @@ class Person(BaseModel):
 
 
 class Project(BaseModel):
+    """
+    Represents a project with its details and metadata.
+
+    Attributes:
+        title (str): The project's title
+        slug (str): URL-friendly version of the title
+        description (str): Brief description of the project
+        tags (List[str]): List of technology tags or categories
+        githubRepoUrl (Optional[str]): URL to the project's GitHub repository
+        websiteUrl (Optional[str]): URL to the project's live website
+        projectReadme (dict): Rich text content containing the project's README
+        picture_url (str): URL to the project's featured image
+        betterStackStatusId (Optional[str]): BetterStack status page ID
+        isFeatured (bool): Whether the project is featured
+    """
+
     title: str
     slug: str
     description: str
@@ -80,12 +119,12 @@ def format_person(entry) -> Person:
 def format_project(entry) -> Project:
     """Format a Contentful project entry into our Project model."""
     # Debug: Log available fields
-    logger.info(f"Available fields: {dir(entry)}")
-    logger.info(f"Raw entry: {entry}")
+    logger.info("Available fields: %s", dir(entry))
+    logger.info("Raw entry: %s", entry)
 
     # Try to access fields using raw fields
     fields = entry.raw["fields"]
-    logger.info(f"Raw fields: {fields}")
+    logger.info("Raw fields: %s", fields)
 
     return Project(
         title=entry.title,
@@ -104,11 +143,18 @@ def format_project(entry) -> Project:
 # Route Endpoints
 @router.get("/", include_in_schema=False)
 async def index():
+    """
+    Default endpoint that returns an error message directing users to the documentation.
+
+    Returns:
+        JSONResponse: A 400 error response with a message directing users to the documentation.
+    """
     return JSONResponse(
         status_code=400,
         content={
             "ok": False,
-            "message": "No route specified, please refer to the documentation for more information.",
+            "message": "No route specified, please refer to the documentation for more "
+            "information.",
         },
     )
 
@@ -131,7 +177,7 @@ async def get_people():
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error fetching people from Contentful: {str(e)}"
-        )
+        ) from e
 
 
 @router.get(
@@ -158,7 +204,7 @@ async def get_person(slug: str):
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error fetching person from Contentful: {str(e)}"
-        )
+        ) from e
 
 
 @router.get(
@@ -180,13 +226,13 @@ async def get_projects():
             try:
                 formatted_projects.append(format_project(entry))
             except Exception as e:
-                logger.error(f"Error formatting project: {e}")
+                logger.error("Error formatting project: %s", str(e))
                 raise
         return formatted_projects
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error fetching projects from Contentful: {str(e)}"
-        )
+        ) from e
 
 
 @router.get(
@@ -213,4 +259,4 @@ async def get_project(slug: str):
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error fetching project from Contentful: {str(e)}"
-        )
+        ) from e
