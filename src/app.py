@@ -15,6 +15,8 @@ from routers import main_router
 from routers.v1 import main_router as v1_main_router
 from routers.v1 import watcher_router as v1_watcher_router
 from routers.v1 import ldev_cms_router as v1_ldev_cms_router
+from routers.v1 import image_tools_router as v1_image_tools_router
+from routers.v1 import color_tools_router as v1_color_tools_router
 
 # Load the environment variables
 load_dotenv(override=True)
@@ -31,6 +33,8 @@ app.include_router(main_router.router)
 app.include_router(v1_main_router.router, prefix="/v1")
 app.include_router(v1_watcher_router.router, prefix="/v1/watcher")
 app.include_router(v1_ldev_cms_router.router, prefix="/v1/ldev-cms")
+app.include_router(v1_image_tools_router.router, prefix="/v1/image-tools")
+app.include_router(v1_color_tools_router.router, prefix="/v1/color-tools")
 
 
 # Run the application
