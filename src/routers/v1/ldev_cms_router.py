@@ -16,7 +16,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create a router
-router = APIRouter()
+router = APIRouter(
+    tags=["LDEV CMS"],
+)
 
 
 # Pydantic models for response validation
@@ -69,24 +71,24 @@ class Project(BaseModel):
         slug (str): URL-friendly version of the title
         description (str): Brief description of the project
         tags (List[str]): List of technology tags or categories
-        githubRepoUrl (Optional[str]): URL to the project's GitHub repository
-        websiteUrl (Optional[str]): URL to the project's live website
-        projectReadme (dict): Rich text content containing the project's README
-        picture_url (str): URL to the project's featured image
-        betterStackStatusId (Optional[str]): BetterStack status page ID
-        isFeatured (bool): Whether the project is featured
+        github_repo_url (Optional[str]): URL to the project's GitHub repository
+        website_url (Optional[str]): URL to the project's live website
+        project_readme (dict): Rich text content containing the project's README
+        picture_url (str): URL to the project's cover image or logo
+        better_stack_status_id (Optional[str]): BetterStack status page ID
+        is_featured (bool): Whether the project is featured
     """
 
     title: str
     slug: str
     description: str
     tags: List[str]
-    githubRepoUrl: Optional[str] = None
-    websiteUrl: Optional[str] = None
-    projectReadme: dict  # RichText content will be returned as a dict
+    github_repo_url: Optional[str] = None
+    website_url: Optional[str] = None
+    project_readme: dict  # RichText content will be returned as a dict
     picture_url: str
-    betterStackStatusId: Optional[str] = None
-    isFeatured: bool
+    better_stack_status_id: Optional[str] = None
+    is_featured: bool
 
 
 # Initialize Contentful client
@@ -131,12 +133,12 @@ def format_project(entry) -> Project:
         slug=entry.slug,
         description=entry.description,
         tags=entry.tags,
-        githubRepoUrl=fields.get("githubRepoUrl", None),
-        websiteUrl=fields.get("websiteUrl", None),
-        projectReadme=entry.project_readme,
+        github_repo_url=fields.get("githubRepoUrl", None),
+        website_url=fields.get("websiteUrl", None),
+        project_readme=entry.project_readme,
         picture_url=entry.picture.url(),
-        betterStackStatusId=fields.get("betterStackStatusId", None),
-        isFeatured=fields.get("isFeatured", False),
+        better_stack_status_id=fields.get("betterStackStatusId", None),
+        is_featured=fields.get("isFeatured", False),
     )
 
 
@@ -162,7 +164,6 @@ async def index():
 @router.get(
     "/people",
     response_model=List[Person],
-    tags=["LDEV CMS"],
     summary="Get All People",
     description="Get all people from the LDEV CMS.",
 )
@@ -183,7 +184,6 @@ async def get_people():
 @router.get(
     "/people/{slug}",
     response_model=Person,
-    tags=["LDEV CMS"],
     summary="Get Person",
     description="Get a specific person by their slug.",
 )
@@ -210,7 +210,6 @@ async def get_person(slug: str):
 @router.get(
     "/projects",
     response_model=List[Project],
-    tags=["LDEV CMS"],
     summary="Get All Projects",
     description="Get all projects from the LDEV CMS.",
 )
@@ -238,7 +237,6 @@ async def get_projects():
 @router.get(
     "/projects/{slug}",
     response_model=Project,
-    tags=["LDEV CMS"],
     summary="Get Project",
     description="Get a specific project by its slug.",
 )

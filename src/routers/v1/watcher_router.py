@@ -320,7 +320,9 @@ class ErrorResponse(BaseModel):
 
 
 # Create router
-router = APIRouter()
+router = APIRouter(
+    tags=["Watcher"],
+)
 
 
 @router.get("/", response_model=ErrorResponse, include_in_schema=False)
@@ -352,7 +354,6 @@ async def index():
 @router.get(
     "/{discord_id}",
     response_model=WatcherResponse,
-    tags=["Watcher"],
     summary="Get User Watcher Data",
     description="""Get a user's presence data from the LDEV Watcher System.
 Responses Include:
