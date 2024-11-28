@@ -14,10 +14,17 @@ router = APIRouter()
 # Route Endpoints
 @router.get("/", include_in_schema=False)
 async def index():
+    """
+    Default endpoint that returns an error message directing users to the documentation.
+
+    Returns:
+        JSONResponse: A 400 error response with a message directing users to the documentation.
+    """
     return JSONResponse(
         status_code=400,
         content={
             "ok": False,
-            "message": "No route specified, please refer to the documentation for more information.",
+            "message": "No route specified, please refer to the documentation for more"
+            "information.",
         },
     )

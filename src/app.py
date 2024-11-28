@@ -10,6 +10,12 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
 
+# Import routers
+from routers import main_router
+from routers.v1 import main_router as v1_main_router
+from routers.v1 import watcher_router as v1_watcher_router
+from routers.v1 import ldev_cms_router as v1_ldev_cms_router
+
 # Load the environment variables
 load_dotenv(override=True)
 
@@ -19,13 +25,6 @@ app = FastAPI(
     description="The lagden.dev API used for our servies.",
     version="2.0.0beta",
 )
-
-# Import routers (equivalent to Flask blueprints)
-# You'll need to convert these to FastAPI routers
-from routers import main_router as main_router
-from routers.v1 import main_router as v1_main_router
-from routers.v1 import watcher_router as v1_watcher_router
-from routers.v1 import ldev_cms_router as v1_ldev_cms_router
 
 # Include the routers
 app.include_router(main_router.router)
@@ -40,7 +39,7 @@ if __name__ == "__main__":
 
     uvicorn.run(
         "app:app",
-        host=os.getenv("HOST", "0.0.0.0"),
-        port=int(os.getenv("DEV_PORT", 3000)),
+        host=os.getenv("HOST"),
+        port=int(os.getenv("DEV_PORT", "3000")),
         reload=True,  # Enable auto-reload during development
     )
