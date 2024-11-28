@@ -25,11 +25,13 @@ app = FastAPI(
 from routers import main_router as main_router
 from routers.v1 import main_router as v1_main_router
 from routers.v1 import watcher_router as v1_watcher_router
+from routers.v1 import ldev_cms_router as v1_ldev_cms_router
 
 # Include the routers
 app.include_router(main_router.router)
 app.include_router(v1_main_router.router, prefix="/v1")
 app.include_router(v1_watcher_router.router, prefix="/v1/watcher")
+app.include_router(v1_ldev_cms_router.router, prefix="/v1/ldev-cms")
 
 
 # Run the application
