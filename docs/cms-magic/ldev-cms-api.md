@@ -9,7 +9,7 @@ Access content from the Lagden Development CMS including team members and projec
 **1. Get All People**
 
 ```
-GET /cms/people
+GET /ldev-cms/people
 ```
 
 Fetch all team members and their detailed profiles. Perfect for team pages and directory listings!
@@ -17,7 +17,7 @@ Fetch all team members and their detailed profiles. Perfect for team pages and d
 **2. Get Specific Person**
 
 ```
-GET /cms/people/{slug}
+GET /ldev-cms/people/{slug}
 ```
 
 Get detailed information about a specific team member using their unique slug.
@@ -27,7 +27,7 @@ Get detailed information about a specific team member using their unique slug.
 **1. Get All Projects**
 
 ```
-GET /cms/projects
+GET /ldev-cms/projects
 ```
 
 Retrieve all projects in the CMS. Great for portfolio pages and project showcases!
@@ -35,7 +35,7 @@ Retrieve all projects in the CMS. Great for portfolio pages and project showcase
 **2. Get Specific Project**
 
 ```
-GET /cms/projects/{slug}
+GET /ldev-cms/projects/{slug}
 ```
 
 Get comprehensive information about a specific project using its unique slug.
@@ -93,25 +93,25 @@ Get comprehensive information about a specific project using its unique slug.
 #### Fetch All Team Members
 
 ```bash
-GET /cms/people
+GET /ldev-cms/people
 ```
 
 #### Get Specific Team Member
 
 ```bash
-GET /cms/people/jane-doe
+GET /ldev-cms/people/jane-doe
 ```
 
 #### Fetch All Projects
 
 ```bash
-GET /cms/projects
+GET /ldev-cms/projects
 ```
 
 #### Get Specific Project
 
 ```bash
-GET /cms/projects/cool-project
+GET /ldev-cms/projects/cool-project
 ```
 
 ### ❌ Error Responses
