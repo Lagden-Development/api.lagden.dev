@@ -4,7 +4,10 @@ View the full license here: https://github.com/Lagden-Development/.github/blob/m
 """
 
 import os
+import re
 import logging
+import httpx
+from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
@@ -91,6 +94,42 @@ class Project(BaseModel):
     is_featured: bool
 
 
+class GitHubCommit(BaseModel):
+    """
+    Represents a GitHub commit.
+
+    Attributes:
+        sha (str): The commit hash
+        message (str): The commit message
+        author_name (str): Name of the commit author
+        author_email (str): Email of the commit author
+        date (datetime): When the commit was made
+        url (str): URL to view the commit on GitHub
+    """
+
+    sha: str
+    message: str
+    author_name: str
+    author_email: str
+    date: datetime
+    url: str
+
+
+class CommitsResponse(BaseModel):
+    """
+    Response model for the commits endpoint.
+
+    Attributes:
+        project_title (str): Title of the project
+        repository_url (str): URL of the GitHub repository
+        commits (List[GitHubCommit]): List of recent commits
+    """
+
+    project_title: str
+    repository_url: str
+    commits: List[GitHubCommit]
+
+
 # Initialize Contentful client
 client = contentful.Client(
     space_id=os.getenv("CONTENTFUL_SPACE_ID"),
@@ -140,6 +179,26 @@ def format_project(entry) -> Project:
         better_stack_status_id=fields.get("betterStackStatusId", None),
         is_featured=fields.get("isFeatured", False),
     )
+
+
+def parse_github_url(url: str) -> tuple[str, str]:
+    """
+    Parse a GitHub repository URL to extract owner and repo name.
+
+    Args:
+        url (str): GitHub repository URL
+
+    Returns:
+        tuple[str, str]: Repository owner and name
+
+    Raises:
+        ValueError: If the URL is not a valid GitHub repository URL
+    """
+    pattern = r"github\.com/([^/]+)/([^/]+)"
+    match = re.search(pattern, url)
+    if not match:
+        raise ValueError("Invalid GitHub repository URL")
+    return match.group(1), match.group(2)
 
 
 # Route Endpoints
@@ -257,4 +316,98 @@ async def get_project(slug: str):
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error fetching project from Contentful: {str(e)}"
+        ) from e
+
+
+@router.get(
+    "/projects/{slug}/commits",
+    response_model=CommitsResponse,
+    summary="Get Project Commits",
+    description="Get the latest commits for a project's GitHub repository.",
+)
+async def get_project_commits(slug: str, limit: int = 10):
+    """
+    Retrieve recent commits for a project's GitHub repository.
+
+    Args:
+        slug (str): Project slug
+        limit (int): Maximum number of commits to return (default: 10)
+
+    Returns:
+        CommitsResponse: Project information and recent commits
+
+    Raises:
+        HTTPException: If project is not found or GitHub API request fails
+    """
+    try:
+        # Get project details
+        entries = client.entries({"content_type": "project", "fields.slug": slug})
+        if not entries:
+            raise HTTPException(status_code=404, detail="Project not found")
+
+        project = entries[0]
+        github_url = project.raw["fields"].get("githubRepoUrl")
+
+        if not github_url:
+            raise HTTPException(
+                status_code=400,
+                detail="Project does not have an associated GitHub repository",
+            )
+
+        # Parse GitHub URL
+        try:
+            owner, repo = parse_github_url(github_url)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e)) from e
+
+        # Get GitHub token from environment
+        github_token = os.getenv("GITHUB_TOKEN")
+        if not github_token:
+            raise HTTPException(status_code=500, detail="GitHub token not configured")
+
+        # Make request to GitHub API
+        async with httpx.AsyncClient() as http_client:
+            response = await http_client.get(
+                f"https://api.github.com/repos/{owner}/{repo}/commits",
+                headers={
+                    "Authorization": f"token {github_token}",
+                    "Accept": "application/vnd.github.v3+json",
+                },
+                params={"per_page": limit},
+            )
+
+            if response.status_code != 200:
+                raise HTTPException(
+                    status_code=response.status_code,
+                    detail=f"GitHub API error: {response.text}",
+                )
+
+            commits_data = response.json()
+
+        # Format commits
+        commits = []
+        for commit in commits_data:
+            commits.append(
+                GitHubCommit(
+                    sha=commit["sha"],
+                    message=commit["commit"]["message"],
+                    author_name=commit["commit"]["author"]["name"],
+                    author_email=commit["commit"]["author"]["email"],
+                    date=datetime.fromisoformat(
+                        commit["commit"]["author"]["date"].replace("Z", "+00:00")
+                    ),
+                    url=commit["html_url"],
+                )
+            )
+
+        return CommitsResponse(
+            project_title=project.title, repository_url=github_url, commits=commits
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Error fetching commits: %s", str(e))
+        raise HTTPException(
+            status_code=500, detail=f"Error fetching commits: {str(e)}"
         ) from e
