@@ -30,17 +30,17 @@ This endpoint analyzes any image URL and extracts the most dominant colors using
 
 ```json
 {
-  "ok": true,
-  "status": 200,
-  "message": "Successfully extracted dominant colors",
-  "data": {
-    "hex_colors": ["#FF5733", "#33FF57", "#5733FF"],
-    "rgb_colors": [
-      [255, 87, 51],
-      [51, 255, 87],
-      [87, 51, 255]
-    ]
-  }
+    "ok": true,
+    "status": 200,
+    "message": "Successfully extracted dominant colors",
+    "data": {
+        "hex_colors": ["#FF5733", "#33FF57", "#5733FF"],
+        "rgb_colors": [
+            [255, 87, 51],
+            [51, 255, 87],
+            [87, 51, 255]
+        ]
+    }
 }
 ```
 
@@ -74,17 +74,17 @@ You might see these error cases:
 
 - `400`: Invalid URL or image processing failed
 
-  ```json
-  {
-    "detail": "Failed to download the image: Connection timeout"
-  }
-  ```
+    ```json
+    {
+        "detail": "Failed to download the image: Connection timeout"
+    }
+    ```
 
-  ```json
-  {
-    "detail": "Error processing image: Invalid image format"
-  }
-  ```
+    ```json
+    {
+        "detail": "Error processing image: Invalid image format"
+    }
+    ```
 
 #### 💡 Tips
 

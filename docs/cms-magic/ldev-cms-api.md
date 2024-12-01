@@ -46,24 +46,24 @@ Get comprehensive information about a specific project using its unique slug.
 
 ```json
 {
-  "name": "Jane Doe",
-  "slug": "jane-doe",
-  "occupation": "Full Stack Developer",
-  "location": "Stockholm, Sweden",
-  "pronouns": "she/her",
-  "skills": ["Python", "React", "Docker"],
-  "links": [
-    {
-      "url": "https://github.com/janedoe",
-      "name": "GitHub"
-    }
-  ],
-  "introduction": {
-    "content": [
-      // Rich text content
-    ]
-  },
-  "picture_url": "https://images.ctfassets.net/..."
+    "name": "Jane Doe",
+    "slug": "jane-doe",
+    "occupation": "Full Stack Developer",
+    "location": "Stockholm, Sweden",
+    "pronouns": "she/her",
+    "skills": ["Python", "React", "Docker"],
+    "links": [
+        {
+            "url": "https://github.com/janedoe",
+            "name": "GitHub"
+        }
+    ],
+    "introduction": {
+        "content": [
+            // Rich text content
+        ]
+    },
+    "picture_url": "https://images.ctfassets.net/..."
 }
 ```
 
@@ -71,20 +71,20 @@ Get comprehensive information about a specific project using its unique slug.
 
 ```json
 {
-  "title": "Cool Project",
-  "slug": "cool-project",
-  "description": "A really cool project",
-  "tags": ["Python", "FastAPI", "React"],
-  "github_repo_url": "https://github.com/org/repo",
-  "website_url": "https://project.com",
-  "project_readme": {
-    "content": [
-      // Rich text content
-    ]
-  },
-  "picture_url": "https://images.ctfassets.net/...",
-  "better_stack_status_id": "abc123",
-  "is_featured": true
+    "title": "Cool Project",
+    "slug": "cool-project",
+    "description": "A really cool project",
+    "tags": ["Python", "FastAPI", "React"],
+    "github_repo_url": "https://github.com/org/repo",
+    "website_url": "https://project.com",
+    "project_readme": {
+        "content": [
+            // Rich text content
+        ]
+    },
+    "picture_url": "https://images.ctfassets.net/...",
+    "better_stack_status_id": "abc123",
+    "is_featured": true
 }
 ```
 
@@ -122,13 +122,13 @@ When requesting a specific person or project that doesn't exist:
 
 ```json
 {
-  "detail": "Person not found"
+    "detail": "Person not found"
 }
 ```
 
 ```json
 {
-  "detail": "Project not found"
+    "detail": "Project not found"
 }
 ```
 
@@ -138,7 +138,7 @@ When there's an issue fetching data from Contentful:
 
 ```json
 {
-  "detail": "Error fetching data from Contentful: [error details]"
+    "detail": "Error fetching data from Contentful: [error details]"
 }
 ```
 

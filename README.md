@@ -46,93 +46,93 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
 
 ```json
 {
-  "ok": true,
-  "presence_data": {
-    "active_platforms": {
-      "desktop": true,
-      "mobile": false,
-      "web": false
+    "ok": true,
+    "presence_data": {
+        "active_platforms": {
+            "desktop": true,
+            "mobile": false,
+            "web": false
+        },
+        "custom_status": null,
+        "misc_activities": [
+            {
+                "application_id": 383226320970055681,
+                "assets": {
+                    "large_image": "https://cdn.discordapp.com/app-assets/383226320970055681/565944799761268737.png",
+                    "large_text": "Editing a JSON file",
+                    "small_image": "https://cdn.discordapp.com/app-assets/383226320970055681/565945770067623946.png",
+                    "small_text": "Visual Studio Code"
+                },
+                "created_at": "2024-10-20T14:35:10.280000+00:00",
+                "details": "Editing projects.json",
+                "name": "Visual Studio Code",
+                "state": "Workspace: lagden.dev [SSH: ldev-vps]",
+                "timestamps": {
+                    "end": null,
+                    "start": 1729429198901
+                },
+                "type": "Activity"
+            }
+        ],
+        "spotify_status": {
+            "activity": {
+                "color": {
+                    "b": 84,
+                    "g": 185,
+                    "hex": "#1db954",
+                    "r": 29
+                },
+                "created_at": "2024-10-20T14:35:10.280000+00:00",
+                "party_id": "spotify:1277005773230313474",
+                "title": "LIKE A TATTOO (Jersey Club)",
+                "type": "Spotify"
+            },
+            "album": {
+                "cover_url": "https://i.scdn.co/image/ab67616d0000b2735a922551cdfda94be49fbdf8",
+                "name": "Ocean One, Vol. 3 (A Jersey Club Mixtape)"
+            },
+            "track": {
+                "artists": ["DJ SoulChild AC"],
+                "end": "2024-10-20T14:37:39.731000+00:00",
+                "name": "LIKE A TATTOO (Jersey Club)",
+                "start": "2024-10-20T14:35:09.732000+00:00",
+                "url": "https://open.spotify.com/track/4v5F7sJgQgtjQ2PLZ1Gzww"
+            }
+        },
+        "statuses": {
+            "desktop": "dnd",
+            "mobile": "offline",
+            "raw_status": "dnd",
+            "status": "dnd",
+            "web": "offline"
+        }
     },
-    "custom_status": null,
-    "misc_activities": [
-      {
-        "application_id": 383226320970055681,
-        "assets": {
-          "large_image": "https://cdn.discordapp.com/app-assets/383226320970055681/565944799761268737.png",
-          "large_text": "Editing a JSON file",
-          "small_image": "https://cdn.discordapp.com/app-assets/383226320970055681/565945770067623946.png",
-          "small_text": "Visual Studio Code"
+    "user_data": {
+        "accent_color": null,
+        "accent_colour": null,
+        "avatar": {
+            "key": "878d4c9db5d644ec902c4bb0b8346b8c",
+            "url": "https://cdn.discordapp.com/avatars/1277005773230313474/878d4c9db5d644ec902c4bb0b8346b8c.png?size=1024"
         },
-        "created_at": "2024-10-20T14:35:10.280000+00:00",
-        "details": "Editing projects.json",
-        "name": "Visual Studio Code",
-        "state": "Workspace: lagden.dev [SSH: ldev-vps]",
-        "timestamps": {
-          "end": null,
-          "start": 1729429198901
-        },
-        "type": "Activity"
-      }
-    ],
-    "spotify_status": {
-      "activity": {
+        "avatar_decoration": "None",
+        "avatar_decoration_sku_id": null,
+        "banner": null,
         "color": {
-          "b": 84,
-          "g": 185,
-          "hex": "#1db954",
-          "r": 29
+            "b": 0,
+            "g": 0,
+            "hex": "#000000",
+            "r": 0
         },
-        "created_at": "2024-10-20T14:35:10.280000+00:00",
-        "party_id": "spotify:1277005773230313474",
-        "title": "LIKE A TATTOO (Jersey Club)",
-        "type": "Spotify"
-      },
-      "album": {
-        "cover_url": "https://i.scdn.co/image/ab67616d0000b2735a922551cdfda94be49fbdf8",
-        "name": "Ocean One, Vol. 3 (A Jersey Club Mixtape)"
-      },
-      "track": {
-        "artists": ["DJ SoulChild AC"],
-        "end": "2024-10-20T14:37:39.731000+00:00",
-        "name": "LIKE A TATTOO (Jersey Club)",
-        "start": "2024-10-20T14:35:09.732000+00:00",
-        "url": "https://open.spotify.com/track/4v5F7sJgQgtjQ2PLZ1Gzww"
-      }
-    },
-    "statuses": {
-      "desktop": "dnd",
-      "mobile": "offline",
-      "raw_status": "dnd",
-      "status": "dnd",
-      "web": "offline"
+        "created_at": "2024-08-24T20:45:01.958000+00:00",
+        "discriminator": "0",
+        "display_avatar": "https://cdn.discordapp.com/avatars/1277005773230313474/878d4c9db5d644ec902c4bb0b8346b8c.png?size=1024",
+        "display_name": "Zach",
+        "global_name": "Zach",
+        "id": 1277005773230313474,
+        "mention": "<@1277005773230313474>",
+        "name": "zachlagden",
+        "public_flags": 4194304
     }
-  },
-  "user_data": {
-    "accent_color": null,
-    "accent_colour": null,
-    "avatar": {
-      "key": "878d4c9db5d644ec902c4bb0b8346b8c",
-      "url": "https://cdn.discordapp.com/avatars/1277005773230313474/878d4c9db5d644ec902c4bb0b8346b8c.png?size=1024"
-    },
-    "avatar_decoration": "None",
-    "avatar_decoration_sku_id": null,
-    "banner": null,
-    "color": {
-      "b": 0,
-      "g": 0,
-      "hex": "#000000",
-      "r": 0
-    },
-    "created_at": "2024-08-24T20:45:01.958000+00:00",
-    "discriminator": "0",
-    "display_avatar": "https://cdn.discordapp.com/avatars/1277005773230313474/878d4c9db5d644ec902c4bb0b8346b8c.png?size=1024",
-    "display_name": "Zach",
-    "global_name": "Zach",
-    "id": 1277005773230313474,
-    "mention": "<@1277005773230313474>",
-    "name": "zachlagden",
-    "public_flags": 4194304
-  }
 }
 ```
 
@@ -140,15 +140,15 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
 
 - **`ok`**: Whether the API request was successful.
 - **`presence_data`**: Contains the user's active platform(s), activities, custom statuses, and Spotify data if applicable.
-  - **`active_platforms`**: Indicates which platforms the user is active on (`desktop`, `mobile`, `web`).
-  - **`misc_activities`**: Lists other activities such as applications the user is using.
-  - **`spotify_status`**: If the user is listening to Spotify, shows current track details.
-  - **`statuses`**: Displays the status on each platform (`online`, `offline`, `dnd`, etc.).
+    - **`active_platforms`**: Indicates which platforms the user is active on (`desktop`, `mobile`, `web`).
+    - **`misc_activities`**: Lists other activities such as applications the user is using.
+    - **`spotify_status`**: If the user is listening to Spotify, shows current track details.
+    - **`statuses`**: Displays the status on each platform (`online`, `offline`, `dnd`, etc.).
 - **`user_data`**: Contains general profile information.
-  - **`avatar`**: URL to the user's avatar.
-  - **`display_name`**: The user's display name.
-  - **`mention`**: A formatted mention for Discord.
-  - **`created_at`**: Date and time the user's account was created.
+    - **`avatar`**: URL to the user's avatar.
+    - **`display_name`**: The user's display name.
+    - **`mention`**: A formatted mention for Discord.
+    - **`created_at`**: Date and time the user's account was created.
 
 ---
 
@@ -163,49 +163,49 @@ GET https://api.lagden.dev/v1/watcher/1277005773230313474
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/Lagden-Development/lagden.dev-api.git
-   cd lagden.dev-api
-   ```
+    ```bash
+    git clone https://github.com/Lagden-Development/lagden.dev-api.git
+    cd lagden.dev-api
+    ```
 
 2. Set up a Python virtual environment:
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-   ```
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    ```
 
 3. Install the required dependencies:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 4. Set up environment variables:
 
-   - Copy `.env.example` to `.env` and fill in the details, including MongoDB URI and server configuration:
+    - Copy `.env.example` to `.env` and fill in the details, including MongoDB URI and server configuration:
 
-     ```plaintext
-     MONGODB_URI=mongodb://username:password@localhost:27017/database
-     HOST=0.0.0.0
-     PORT=8080
-     ```
+        ```plaintext
+        MONGODB_URI=mongodb://username:password@localhost:27017/database
+        HOST=0.0.0.0
+        PORT=8080
+        ```
 
-   - Make sure your MongoDB instance is running and populated with presence data from the [ricksanchez](https://github.com/Lagden-Development/ricksanchez) system.
+    - Make sure your MongoDB instance is running and populated with presence data from the [ricksanchez](https://github.com/Lagden-Development/ricksanchez) system.
 
 5. Running the application:
 
-   - For development:
+    - For development:
 
-     ```bash
-     uvicorn main:app --reload --host 0.0.0.0 --port 8080
-     ```
+        ```bash
+        uvicorn main:app --reload --host 0.0.0.0 --port 8080
+        ```
 
-   - For production:
+    - For production:
 
-     ```bash
-     uvicorn main:app --host 0.0.0.0 --port 8080 --workers 4
-     ```
+        ```bash
+        uvicorn main:app --host 0.0.0.0 --port 8080 --workers 4
+        ```
 
 ---
 

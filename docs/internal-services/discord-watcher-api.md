@@ -31,87 +31,87 @@ This endpoint fetches comprehensive user presence data from the LDEV Watcher Sys
 
 ```json
 {
-  "ok": true,
-  "user_data": {
-    "accent_color": 16711680,
-    "avatar": {
-      "key": "abc123",
-      "url": "https://cdn.discord.com/avatars/..."
-    },
-    "color": {
-      "r": 255,
-      "g": 0,
-      "b": 0,
-      "hex": "#FF0000"
-    },
-    "created_at": "2020-01-01T00:00:00Z",
-    "display_name": "Cool User",
-    "global_name": "CoolUser"
-    // ... other user fields
-  },
-  "presence_data": {
-    "active_platforms": {
-      "desktop": true,
-      "mobile": false,
-      "web": false
-    },
-    "custom_status": {
-      "name": "Custom Status",
-      "emoji": "🎮",
-      "state": "Gaming!",
-      "created_at": "2023-01-01T00:00:00Z"
-    },
-    "spotify_status": {
-      "activity": {
+    "ok": true,
+    "user_data": {
+        "accent_color": 16711680,
+        "avatar": {
+            "key": "abc123",
+            "url": "https://cdn.discord.com/avatars/..."
+        },
         "color": {
-          "r": 30,
-          "g": 215,
-          "b": 96,
-          "hex": "#1ED760"
+            "r": 255,
+            "g": 0,
+            "b": 0,
+            "hex": "#FF0000"
         },
-        "created_at": "2023-01-01T00:00:00Z",
-        "party_id": "spotify:123",
-        "title": "Spotify"
-      },
-      "album": {
-        "cover_url": "https://i.scdn.co/image/...",
-        "name": "Awesome Album"
-      },
-      "track": {
-        "artists": ["Cool Artist"],
-        "end": "2023-01-01T00:03:30Z",
-        "name": "Amazing Song",
-        "start": "2023-01-01T00:00:00Z",
-        "url": "https://open.spotify.com/track/..."
-      }
+        "created_at": "2020-01-01T00:00:00Z",
+        "display_name": "Cool User",
+        "global_name": "CoolUser"
+        // ... other user fields
     },
-    "misc_activities": [
-      {
-        "application_id": 123456789,
-        "assets": {
-          "large_image": "game_image",
-          "large_text": "Playing Game",
-          "small_image": "status_image",
-          "small_text": "In Menu"
+    "presence_data": {
+        "active_platforms": {
+            "desktop": true,
+            "mobile": false,
+            "web": false
         },
-        "created_at": "2023-01-01T00:00:00Z",
-        "details": "In Main Menu",
-        "name": "Cool Game",
-        "state": "Playing Solo",
-        "timestamps": {
-          "start": 1672531200
+        "custom_status": {
+            "name": "Custom Status",
+            "emoji": "🎮",
+            "state": "Gaming!",
+            "created_at": "2023-01-01T00:00:00Z"
         },
-        "type": "PLAYING"
-      }
-    ],
-    "statuses": {
-      "desktop": "online",
-      "mobile": "idle",
-      "web": "offline",
-      "status": "online",
-      "raw_status": "online"
+        "spotify_status": {
+            "activity": {
+                "color": {
+                    "r": 30,
+                    "g": 215,
+                    "b": 96,
+                    "hex": "#1ED760"
+                },
+                "created_at": "2023-01-01T00:00:00Z",
+                "party_id": "spotify:123",
+                "title": "Spotify"
+            },
+            "album": {
+                "cover_url": "https://i.scdn.co/image/...",
+                "name": "Awesome Album"
+            },
+            "track": {
+                "artists": ["Cool Artist"],
+                "end": "2023-01-01T00:03:30Z",
+                "name": "Amazing Song",
+                "start": "2023-01-01T00:00:00Z",
+                "url": "https://open.spotify.com/track/..."
+            }
+        },
+        "misc_activities": [
+            {
+                "application_id": 123456789,
+                "assets": {
+                    "large_image": "game_image",
+                    "large_text": "Playing Game",
+                    "small_image": "status_image",
+                    "small_text": "In Menu"
+                },
+                "created_at": "2023-01-01T00:00:00Z",
+                "details": "In Main Menu",
+                "name": "Cool Game",
+                "state": "Playing Solo",
+                "timestamps": {
+                    "start": 1672531200
+                },
+                "type": "PLAYING"
+            }
+        ],
+        "statuses": {
+            "desktop": "online",
+            "mobile": "idle",
+            "web": "offline",
+            "status": "online",
+            "raw_status": "online"
+        }
     }
-  }
 }
 ```
 
@@ -121,8 +121,8 @@ This endpoint fetches comprehensive user presence data from the LDEV Watcher Sys
 
 ```json
 {
-  "ok": false,
-  "message": "User Not Found"
+    "ok": false,
+    "message": "User Not Found"
 }
 ```
 
@@ -130,8 +130,8 @@ This endpoint fetches comprehensive user presence data from the LDEV Watcher Sys
 
 ```json
 {
-  "ok": false,
-  "message": "User Banned"
+    "ok": false,
+    "message": "User Banned"
 }
 ```
 
@@ -139,8 +139,8 @@ This endpoint fetches comprehensive user presence data from the LDEV Watcher Sys
 
 ```json
 {
-  "ok": false,
-  "message": "User opted out of watcher"
+    "ok": false,
+    "message": "User opted out of watcher"
 }
 ```
 
