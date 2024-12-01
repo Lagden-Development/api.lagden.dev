@@ -10,10 +10,6 @@ import os
 
 # Third Party Modules
 from pymongo.mongo_client import MongoClient
-from dotenv import load_dotenv
-
-# Load the environment variables
-load_dotenv()
 
 client = MongoClient(os.getenv("MONGODB_URI"))
 
@@ -22,4 +18,10 @@ users = api_db["watcher_users"]
 
 
 def get_mongo_client():
+    """
+    Get the MongoDB client
+
+    Returns:
+        MongoClient: The MongoDB client
+    """
     return client
