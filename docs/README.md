@@ -32,10 +32,10 @@ https://api.lagden.dev/v1
 
 We've organized everything neatly into sections based on what you might need. Each endpoint comes with:
 
-* Clear descriptions of what it does 📋
-* Request and response formats 📨
-* Real examples you can try 💡
-* Everything else you need to know 🎓
+- Clear descriptions of what it does 📋
+- Request and response formats 📨
+- Real examples you can try 💡
+- Everything else you need to know 🎓
 
 Just use the sidebar to find what you're looking for!
 
@@ -43,6 +43,6 @@ Just use the sidebar to find what you're looking for!
 
 Got questions? Running into issues? We've got your back! Reach out to the dev team through our usual channels, and we'll help you out. 🤝
 
-***
+---
 
 Ready to dive in? Let's explore the endpoints! 🏊‍♂️

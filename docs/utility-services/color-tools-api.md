@@ -24,29 +24,29 @@ This endpoint calculates the perceived brightness of a color using a weighted fo
 #### 📊 Supported Color Formats
 
 1. **Hex Format** (`color_format=hex`):
-   * Full hex: `#RRGGBB` (e.g., `#FF5733`)
-   * Short hex: `#RGB` (e.g., `#F57`)
-   * With or without the `#` prefix
+   - Full hex: `#RRGGBB` (e.g., `#FF5733`)
+   - Short hex: `#RGB` (e.g., `#F57`)
+   - With or without the `#` prefix
 2. **RGB Format** (`color_format=rgb`):
-   * Comma-separated: `255,87,51`
-   * Function notation: `rgb(255,87,51)`
-   * Spaces are allowed!
+   - Comma-separated: `255,87,51`
+   - Function notation: `rgb(255,87,51)`
+   - Spaces are allowed!
 
 #### ✨ Response Format
 
 ```json
 {
-    "ok": true,
-    "status": 200,
-    "message": "Successfully analyzed color brightness",
-    "data": {
-        "input_color": "#FF5733",
-        "format": "hex",
-        "rgb_values": [255, 87, 51],
-        "brightness": 0.452,
-        "is_dark": true,
-        "perception": "dark"
-    }
+  "ok": true,
+  "status": 200,
+  "message": "Successfully analyzed color brightness",
+  "data": {
+    "input_color": "#FF5733",
+    "format": "hex",
+    "rgb_values": [255, 87, 51],
+    "brightness": 0.452,
+    "is_dark": true,
+    "perception": "dark"
+  }
 }
 ```
 
@@ -88,23 +88,23 @@ GET /check_brightness?color=rgb(255,87,51)&color_format=rgb
 
 The API might return these error codes:
 
-* `400`: Invalid color format or values
-* `500`: Server processing error
+- `400`: Invalid color format or values
+- `500`: Server processing error
 
 Example error response:
 
 ```json
 {
-    "detail": "Invalid hex color format. Use #RRGGBB"
+  "detail": "Invalid hex color format. Use #RRGGBB"
 }
 ```
 
 #### 💡 Tips
 
-* For hex colors, both `#FF5733` and `FF5733` work fine
-* RGB values must be between 0 and 255
-* The brightness threshold for dark/light is 0.5
-* Use this endpoint to automatically choose text colors that contrast well with your background!
+- For hex colors, both `#FF5733` and `FF5733` work fine
+- RGB values must be between 0 and 255
+- The brightness threshold for dark/light is 0.5
+- Use this endpoint to automatically choose text colors that contrast well with your background!
 
 #### 🔒 Rate Limiting
 
