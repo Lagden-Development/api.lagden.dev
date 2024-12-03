@@ -1,5 +1,12 @@
 {
-	"devDependencies": {
-		"tailwindcss": "^3.4.15"
-	}
+    "devDependencies": {
+        "prettier": "^3.4.1",
+        "tailwindcss": "^3.4.15"
+    },
+    "scripts": {
+        "tailwind:watch": "pnpx tailwindcss -i ./src/static/css/tailwindbase.css -o ./src/static/css/tailwind.css --watch",
+        "tailwind:build": "pnpx tailwindcss -i ./src/static/css/tailwindbase.css -o ./src/static/css/tailwind.css --minify",
+        "prettier:check": "pnpx prettier . --check",
+        "prettier:format": "pnpx prettier . --write"
+    }
 }
