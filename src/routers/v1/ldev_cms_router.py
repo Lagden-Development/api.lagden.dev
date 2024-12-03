@@ -164,12 +164,12 @@ def format_person(entry) -> Person:
 def format_project(entry) -> Project:
     """Format a Contentful project entry into our Project model."""
     # Debug: Log available fields
-    logger.info("Available fields: %s", dir(entry))
-    logger.info("Raw entry: %s", entry)
+    # logger.info("Available fields: %s", dir(entry))
+    # logger.info("Raw entry: %s", entry)
 
     # Try to access fields using raw fields
     fields = entry.raw["fields"]
-    logger.info("Raw fields: %s", fields)
+    # logger.info("Raw fields: %s", fields)
 
     return Project(
         title=entry.title,
