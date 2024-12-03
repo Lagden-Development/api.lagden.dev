@@ -62,6 +62,19 @@ async def extract_dominant_colors(
     Raises:
         HTTPException: If image download fails or URL is invalid
     """
+
+    # Validate URL
+    if not url:
+        raise HTTPException(status_code=400, detail="Invalid image URL")
+
+    allowed_extensions = ["jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff"]
+
+    if not any(url.lower().endswith(ext) for ext in allowed_extensions):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid image URL. Supported formats: JPG, JPEG, PNG, GIF, BMP, WEBP, TIFF",
+        )
+
     # Download and process image
     try:
         image_response = requests.get(str(url), timeout=10)
