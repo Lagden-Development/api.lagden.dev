@@ -6,13 +6,17 @@ View the full license here: https://github.com/Lagden-Development/.github/blob/m
 import os
 import re
 import logging
-import httpx
 from datetime import datetime
 from typing import List, Optional
+import httpx
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
 import contentful
+
+# Load environment variables
+load_dotenv(override=True)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
