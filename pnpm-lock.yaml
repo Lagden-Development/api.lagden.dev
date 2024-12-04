@@ -10,6 +10,9 @@ importers:
             prettier:
                 specifier: ^3.4.1
                 version: 3.4.1
+            prettier-plugin-jinja-template:
+                specifier: ^2.0.0
+                version: 2.0.0(prettier@3.4.1)
             tailwindcss:
                 specifier: ^3.4.15
                 version: 3.4.15
@@ -576,6 +579,14 @@ packages:
             }
         engines: { node: ^10 || ^12 || >=14 }
 
+    prettier-plugin-jinja-template@2.0.0:
+        resolution:
+            {
+                integrity: sha512-REZDAcZuOUvMDaPS47/GNRLKvbxh9DO9euXhWA7gJGqTLGzHPK2Z841F8I4bxsR7e2lqnHezkQ8GcWaKekKBVQ==,
+            }
+        peerDependencies:
+            prettier: ^3.0.0
+
     prettier@3.4.1:
         resolution:
             {
@@ -1044,6 +1055,10 @@ snapshots:
             nanoid: 3.3.8
             picocolors: 1.1.1
             source-map-js: 1.2.1
+
+    prettier-plugin-jinja-template@2.0.0(prettier@3.4.1):
+        dependencies:
+            prettier: 3.4.1
 
     prettier@3.4.1: {}
 

@@ -9,5 +9,6 @@
     "htmlWhitespaceSensitivity": "css",
     "endOfLine": "crlf",
     "embeddedLanguageFormatting": "auto",
-    "proseWrap": "preserve"
+    "proseWrap": "preserve",
+    "plugins": ["prettier-plugin-jinja-template"]
 }
