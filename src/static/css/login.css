@@ -1,0 +1,21 @@
+/* static/css/login.css */
+#loginForm .toggle-password {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+#loginForm .toggle-password:hover {
+    opacity: 1;
+}
+
+#loginForm #remember {
+    transition: border-color 0.2s ease;
+}
+
+#loginForm #remember:checked {
+    border-color: rgb(139, 92, 246);
+}
+
+#loginForm #errorMessage.shake {
+    animation-duration: 0.6s;
+}
