@@ -10,10 +10,14 @@ from datetime import datetime
 from typing import List, Optional
 import httpx
 from pydantic import BaseModel
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 import contentful
+
+from helpers.api_keys import APIKeyHelper
+from helpers.api_logs import APILogHelper
+
 
 # Load environment variables
 load_dotenv(override=True)
@@ -207,21 +211,46 @@ def parse_github_url(url: str) -> tuple[str, str]:
 
 # Route Endpoints
 @router.get("/", include_in_schema=False)
-async def index():
-    """
-    Default endpoint that returns an error message directing users to the documentation.
-
-    Returns:
-        JSONResponse: A 400 error response with a message directing users to the documentation.
-    """
-    return JSONResponse(
-        status_code=400,
-        content={
-            "ok": False,
-            "message": "No route specified, please refer to the documentation for more "
-            "information.",
-        },
+async def index(
+    background_tasks: BackgroundTasks,
+    api_key: str = Query(..., description="API key for authentication"),
+):
+    """Default endpoint that returns an error message directing users to the documentation."""
+    status_code = 400
+    error_message = (
+        "No route specified, please refer to the documentation for more information."
     )
+    key_id = None
+
+    try:
+        if not await APIKeyHelper.has_role(api_key, "cms"):
+            raise HTTPException(
+                status_code=403, detail="API key does not have the required role"
+            )
+
+        api_key_data = await APIKeyHelper.use_key(api_key)
+        key_id = api_key_data["_id"]
+
+        return JSONResponse(
+            status_code=status_code,
+            content={
+                "ok": False,
+                "message": error_message,
+            },
+        )
+    except Exception as e:
+        status_code = getattr(e, "status_code", 500)
+        error_message = str(e)
+        raise
+    finally:
+        background_tasks.add_task(
+            APILogHelper.log_request,
+            key_id=key_id,
+            route="/cms/",
+            method="GET",
+            status_code=status_code,
+            error_message=error_message,
+        )
 
 
 @router.get(
@@ -230,18 +259,41 @@ async def index():
     summary="Get All People",
     description="Get all people from the LDEV CMS.",
 )
-async def get_people():
-    """
-    Retrieve all people from Contentful CMS.
-    Returns a list of person entries with their complete information.
-    """
+async def get_people(
+    background_tasks: BackgroundTasks,
+    api_key: str = Query(..., description="API key for authentication"),
+):
+    status_code = 200
+    error_message = None
+    key_id = None
+
     try:
+        if not await APIKeyHelper.has_role(api_key, "cms"):
+            raise HTTPException(
+                status_code=403, detail="API key does not have the required role"
+            )
+
+        api_key_data = await APIKeyHelper.use_key(api_key)
+        key_id = api_key_data["_id"]
+
         entries = client.entries({"content_type": "person"})
         return [format_person(entry) for entry in entries]
     except Exception as e:
+        status_code = getattr(e, "status_code", 500)
+        error_message = str(e)
         raise HTTPException(
-            status_code=500, detail=f"Error fetching people from Contentful: {str(e)}"
+            status_code=status_code,
+            detail=f"Error fetching people from Contentful: {str(e)}",
         ) from e
+    finally:
+        background_tasks.add_task(
+            APILogHelper.log_request,
+            key_id=key_id,
+            route="/cms/people",
+            method="GET",
+            status_code=status_code,
+            error_message=error_message,
+        )
 
 
 @router.get(
@@ -250,24 +302,41 @@ async def get_people():
     summary="Get Person",
     description="Get a specific person by their slug.",
 )
-async def get_person(slug: str):
-    """
-    Retrieve a specific person by their slug.
-    Returns the complete information for a single person.
-    """
-    try:
-        entries = client.entries({"content_type": "person", "fields.slug": slug})
+async def get_person(
+    slug: str,
+    background_tasks: BackgroundTasks,
+    api_key: str = Query(..., description="API key for authentication"),
+):
+    status_code = 200
+    error_message = None
+    key_id = None
 
+    try:
+        if not await APIKeyHelper.has_role(api_key, "cms"):
+            raise HTTPException(
+                status_code=403, detail="API key does not have the required role"
+            )
+
+        api_key_data = await APIKeyHelper.use_key(api_key)
+        key_id = api_key_data["_id"]
+
+        entries = client.entries({"content_type": "person", "fields.slug": slug})
         if not entries:
             raise HTTPException(status_code=404, detail="Person not found")
-
         return format_person(entries[0])
-    except HTTPException:
-        raise
     except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error fetching person from Contentful: {str(e)}"
-        ) from e
+        status_code = getattr(e, "status_code", 500)
+        error_message = str(e)
+        raise
+    finally:
+        background_tasks.add_task(
+            APILogHelper.log_request,
+            key_id=key_id,
+            route=f"/cms/people/{slug}",
+            method="GET",
+            status_code=status_code,
+            error_message=error_message,
+        )
 
 
 @router.get(
@@ -276,12 +345,23 @@ async def get_person(slug: str):
     summary="Get All Projects",
     description="Get all projects from the LDEV CMS.",
 )
-async def get_projects():
-    """
-    Retrieve all projects from Contentful CMS.
-    Returns a list of project entries with their complete information.
-    """
+async def get_projects(
+    background_tasks: BackgroundTasks,
+    api_key: str = Query(..., description="API key for authentication"),
+):
+    status_code = 200
+    error_message = None
+    key_id = None
+
     try:
+        if not await APIKeyHelper.has_role(api_key, "cms"):
+            raise HTTPException(
+                status_code=403, detail="API key does not have the required role"
+            )
+
+        api_key_data = await APIKeyHelper.use_key(api_key)
+        key_id = api_key_data["_id"]
+
         entries = client.entries({"content_type": "project"})
         formatted_projects = []
         for entry in entries:
@@ -292,9 +372,21 @@ async def get_projects():
                 raise
         return formatted_projects
     except Exception as e:
+        status_code = getattr(e, "status_code", 500)
+        error_message = str(e)
         raise HTTPException(
-            status_code=500, detail=f"Error fetching projects from Contentful: {str(e)}"
+            status_code=status_code,
+            detail=f"Error fetching projects from Contentful: {str(e)}",
         ) from e
+    finally:
+        background_tasks.add_task(
+            APILogHelper.log_request,
+            key_id=key_id,
+            route="/cms/projects",
+            method="GET",
+            status_code=status_code,
+            error_message=error_message,
+        )
 
 
 @router.get(
@@ -303,24 +395,41 @@ async def get_projects():
     summary="Get Project",
     description="Get a specific project by its slug.",
 )
-async def get_project(slug: str):
-    """
-    Retrieve a specific project by its slug.
-    Returns the complete information for a single project.
-    """
-    try:
-        entries = client.entries({"content_type": "project", "fields.slug": slug})
+async def get_project(
+    slug: str,
+    background_tasks: BackgroundTasks,
+    api_key: str = Query(..., description="API key for authentication"),
+):
+    status_code = 200
+    error_message = None
+    key_id = None
 
+    try:
+        if not await APIKeyHelper.has_role(api_key, "cms"):
+            raise HTTPException(
+                status_code=403, detail="API key does not have the required role"
+            )
+
+        api_key_data = await APIKeyHelper.use_key(api_key)
+        key_id = api_key_data["_id"]
+
+        entries = client.entries({"content_type": "project", "fields.slug": slug})
         if not entries:
             raise HTTPException(status_code=404, detail="Project not found")
-
         return format_project(entries[0])
-    except HTTPException:
-        raise
     except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error fetching project from Contentful: {str(e)}"
-        ) from e
+        status_code = getattr(e, "status_code", 500)
+        error_message = str(e)
+        raise
+    finally:
+        background_tasks.add_task(
+            APILogHelper.log_request,
+            key_id=key_id,
+            route=f"/cms/projects/{slug}",
+            method="GET",
+            status_code=status_code,
+            error_message=error_message,
+        )
 
 
 @router.get(
@@ -329,22 +438,25 @@ async def get_project(slug: str):
     summary="Get Project Commits",
     description="Get the latest commits for a project's GitHub repository.",
 )
-async def get_project_commits(slug: str, limit: int = 10):
-    """
-    Retrieve recent commits for a project's GitHub repository.
+async def get_project_commits(
+    slug: str,
+    background_tasks: BackgroundTasks,
+    api_key: str = Query(..., description="API key for authentication"),
+    limit: int = 10,
+):
+    status_code = 200
+    error_message = None
+    key_id = None
 
-    Args:
-        slug (str): Project slug
-        limit (int): Maximum number of commits to return (default: 10)
-
-    Returns:
-        CommitsResponse: Project information and recent commits
-
-    Raises:
-        HTTPException: If project is not found or GitHub API request fails
-    """
     try:
-        # Get project details
+        if not await APIKeyHelper.has_role(api_key, "cms"):
+            raise HTTPException(
+                status_code=403, detail="API key does not have the required role"
+            )
+
+        api_key_data = await APIKeyHelper.use_key(api_key)
+        key_id = api_key_data["_id"]
+
         entries = client.entries({"content_type": "project", "fields.slug": slug})
         if not entries:
             raise HTTPException(status_code=404, detail="Project not found")
@@ -358,18 +470,15 @@ async def get_project_commits(slug: str, limit: int = 10):
                 detail="Project does not have an associated GitHub repository",
             )
 
-        # Parse GitHub URL
         try:
             owner, repo = parse_github_url(github_url)
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e)) from e
 
-        # Get GitHub token from environment
         github_token = os.getenv("GITHUB_TOKEN")
         if not github_token:
             raise HTTPException(status_code=500, detail="GitHub token not configured")
 
-        # Make request to GitHub API
         async with httpx.AsyncClient() as http_client:
             response = await http_client.get(
                 f"https://api.github.com/repos/{owner}/{repo}/commits",
@@ -388,7 +497,6 @@ async def get_project_commits(slug: str, limit: int = 10):
 
             commits_data = response.json()
 
-        # Format commits
         commits = []
         for commit in commits_data:
             commits.append(
@@ -408,10 +516,19 @@ async def get_project_commits(slug: str, limit: int = 10):
             project_title=project.title, repository_url=github_url, commits=commits
         )
 
-    except HTTPException:
-        raise
     except Exception as e:
+        status_code = getattr(e, "status_code", 500)
+        error_message = str(e)
         logger.error("Error fetching commits: %s", str(e))
         raise HTTPException(
-            status_code=500, detail=f"Error fetching commits: {str(e)}"
+            status_code=status_code, detail=f"Error fetching commits: {str(e)}"
         ) from e
+    finally:
+        background_tasks.add_task(
+            APILogHelper.log_request,
+            key_id=key_id,
+            route=f"/cms/projects/{slug}/commits",
+            method="GET",
+            status_code=status_code,
+            error_message=error_message,
+        )
