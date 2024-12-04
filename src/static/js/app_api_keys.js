@@ -36,13 +36,13 @@ confirmCreateKey.addEventListener('click', async () => {
         const response = await fetch('/api/me/api-keys', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ description })
+            body: JSON.stringify({ description }),
         });
 
         const result = await response.json();
-        
+
         if (result.status === 'success') {
             createKeyModal.classList.remove('active');
             keyDescription.value = '';
@@ -64,13 +64,13 @@ function formatDate(timestamp) {
     const date = new Date(timestamp * 1000);
     // Check if the date is valid
     if (isNaN(date.getTime())) return 'Invalid date';
-    
+
     return date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
     });
 }
 
@@ -94,11 +94,19 @@ function createKeyRow(key) {
             </td>
             <td class="py-4 px-6">
                 <div class="roles-container">
-                    ${Array.isArray(key.roles) ? key.roles.map(role => `
+                    ${
+                        Array.isArray(key.roles)
+                            ? key.roles
+                                  .map(
+                                      (role) => `
                         <span class="role-badge ${role.toLowerCase()}" title="${getRoleDescription(role)}">
                             ${role}
                         </span>
-                    `).join('') : ''}
+                    `
+                                  )
+                                  .join('')
+                            : ''
+                    }
                 </div>
             </td>
             <td class="py-4 px-6">
@@ -122,8 +130,8 @@ function createKeyRow(key) {
 // Helper function to get role descriptions
 function getRoleDescription(role) {
     const descriptions = {
-        'default': 'Access to all public endpoints',
-        'cms': 'Access to CMS system endpoints',
+        default: 'Access to all public endpoints',
+        cms: 'Access to CMS system endpoints',
         // Add more role descriptions as needed
     };
     return descriptions[role.toLowerCase()] || role;
@@ -157,11 +165,11 @@ async function deleteKey(keyId) {
 
     try {
         const response = await fetch(`/api/me/api-keys/${keyId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
         });
 
         const result = await response.json();
-        
+
         if (result.status === 'success') {
             toastr.success('API key deleted successfully');
             fetchApiKeys(); // Refresh the list
@@ -177,11 +185,11 @@ async function deleteKey(keyId) {
 // Fetch and display API keys
 async function fetchApiKeys() {
     const tableBody = document.getElementById('apiKeysTableBody');
-    
+
     try {
         const response = await fetch('/api/me/api-keys');
         const result = await response.json();
-        
+
         if (result.status === 'success' && Array.isArray(result.data)) {
             if (result.data.length > 0) {
                 tableBody.innerHTML = result.data.map(createKeyRow).join('');
@@ -207,7 +215,7 @@ async function fetchApiKeys() {
 
     // Show all elements with fade-in animation
     setTimeout(() => {
-        document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+        document.querySelectorAll('.fade-in').forEach((el) => el.classList.add('visible'));
     }, 100);
 }
 

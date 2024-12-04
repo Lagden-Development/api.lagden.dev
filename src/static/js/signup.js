@@ -5,7 +5,7 @@ const RECAPTCHA_SITE_KEY = '6LdKgI8qAAAAAFCPWoutXxb3bRw2CdEAzRHnYP5P';
 function setButtonLoading(button, isLoading) {
     const text = button.querySelector('span');
     const originalText = text.textContent;
-    
+
     if (isLoading) {
         text.textContent = 'Creating account...';
         button.disabled = true;
@@ -15,7 +15,7 @@ function setButtonLoading(button, isLoading) {
         button.disabled = false;
         button.classList.remove('opacity-75', 'cursor-not-allowed');
     }
-    
+
     return originalText;
 }
 
@@ -37,9 +37,9 @@ async function refreshRecaptcha() {
         console.error('reCAPTCHA not loaded');
         return null;
     }
-    
+
     try {
-        const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'signup'});
+        const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'signup' });
         recaptchaToken = token;
         return token;
     } catch (error) {
@@ -48,23 +48,23 @@ async function refreshRecaptcha() {
     }
 }
 
-window.onRecaptchaLoad = async function() {
+window.onRecaptchaLoad = async function () {
     if (typeof grecaptcha === 'undefined') {
         console.error('reCAPTCHA not loaded');
         return;
     }
 
-    await grecaptcha.ready(async function() {
+    await grecaptcha.ready(async function () {
         await refreshRecaptcha();
         // Refresh token every 110 seconds (tokens expire after 120 seconds)
         setInterval(refreshRecaptcha, 110000);
     });
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Password visibility toggle
     document.querySelectorAll('.toggle-password').forEach((button) => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const input = this.parentElement.querySelector('input');
             const icon = this.querySelector('i');
             if (!input || !icon) return;
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Password strength checker
     function checkPasswordStrength(password) {
         if (!password) return { strength: 0, hints: ['Password is required'] };
-        
+
         let strength = 0;
         let hints = [];
 
@@ -120,14 +120,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitButton = form.querySelector('button[type="submit"]');
 
     if (passwordInput && meter && hint) {
-        passwordInput.addEventListener('input', function() {
+        passwordInput.addEventListener('input', function () {
             const { strength, hints } = checkPasswordStrength(this.value);
 
             meter.style.width = `${strength}%`;
-            meter.style.backgroundColor = 
-                strength <= 25 ? '#ef4444' :
-                strength <= 50 ? '#f97316' :
-                strength <= 75 ? '#eab308' : '#22c55e';
+            meter.style.backgroundColor =
+                strength <= 25
+                    ? '#ef4444'
+                    : strength <= 50
+                      ? '#f97316'
+                      : strength <= 75
+                        ? '#eab308'
+                        : '#22c55e';
 
             hint.textContent = hints.join(' • ');
         });
@@ -177,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Handle form submission
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         if (!validateForm() || !submitButton) return;
@@ -185,7 +189,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get a fresh token right before submission
         const token = await refreshRecaptcha();
         if (!token) {
-            showError('#signupForm', 'Unable to verify reCAPTCHA. Please refresh the page and try again.');
+            showError(
+                '#signupForm',
+                'Unable to verify reCAPTCHA. Please refresh the page and try again.'
+            );
             return;
         }
 
@@ -198,11 +205,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 password: passwordInput?.value,
                 password_confirmation: document.getElementById('confirmPassword')?.value,
                 org: document.getElementById('organization')?.value.trim() || null,
-                recaptcha_token: token
+                recaptcha_token: token,
             };
 
             // Validate all required fields are present
-            if (!formData.name || !formData.email || !formData.password || !formData.password_confirmation) {
+            if (
+                !formData.name ||
+                !formData.email ||
+                !formData.password ||
+                !formData.password_confirmation
+            ) {
                 throw new Error('Missing required fields');
             }
 
@@ -210,10 +222,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
             });
 
             if (!response.ok) {

@@ -1,17 +1,17 @@
 const dashboardData = {
     user: {
-        name: "Failed to fetch user data"
+        name: 'Failed to fetch user data',
     },
     stats: {
         totalRequests: 0,
         activeApiKeys: 0,
         latestRequest: {
-            time: "Never",
-            endpoint: "No requests yet"
+            time: 'Never',
+            endpoint: 'No requests yet',
         },
-        requestGrowth: 0
+        requestGrowth: 0,
     },
-    recentRequests: []
+    recentRequests: [],
 };
 
 async function fetchDashboardData() {
@@ -20,7 +20,7 @@ async function fetchDashboardData() {
         const userResponse = await $.ajax({
             url: '/api/me',
             method: 'GET',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (userResponse.status === 'success') {
@@ -33,7 +33,7 @@ async function fetchDashboardData() {
         const keysResponse = await $.ajax({
             url: '/api/me/api-keys',
             method: 'GET',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (keysResponse.status === 'success') {
@@ -46,7 +46,7 @@ async function fetchDashboardData() {
         const totalLogsResponse = await $.ajax({
             url: '/api/me/total-api-logs',
             method: 'GET',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (totalLogsResponse.status === 'success') {
@@ -59,7 +59,7 @@ async function fetchDashboardData() {
         const logsResponse = await $.ajax({
             url: '/api/me/recent-api-logs',
             method: 'GET',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (logsResponse.status === 'success') {
@@ -67,24 +67,23 @@ async function fetchDashboardData() {
             if (logsResponse.data.length > 0) {
                 const latestLog = logsResponse.data[0];
                 const timeDiff = Math.floor(Date.now() / 1000 - latestLog.timestamp);
-                
+
                 dashboardData.stats.latestRequest = {
                     time: formatTimeDiff(timeDiff),
-                    endpoint: latestLog.route
+                    endpoint: latestLog.route,
                 };
 
                 // Format recent requests for the table
-                dashboardData.recentRequests = logsResponse.data.map(log => ({
+                dashboardData.recentRequests = logsResponse.data.map((log) => ({
                     endpoint: log.route,
                     method: log.method,
                     status: log.status_code,
-                    time: formatTimeDiff(Math.floor(Date.now() / 1000 - log.timestamp))
+                    time: formatTimeDiff(Math.floor(Date.now() / 1000 - log.timestamp)),
                 }));
             }
         } else {
             toastr.error(logsResponse.message);
         }
-
     } catch (err) {
         console.error(err);
         toastr.error('Failed to fetch dashboard data, please try again.');
@@ -114,7 +113,7 @@ function createRequestRow(request) {
         GET: 'bg-emerald-500/10 text-emerald-300',
         POST: 'bg-violet-500/10 text-violet-300',
         PUT: 'bg-amber-500/10 text-amber-300',
-        DELETE: 'bg-rose-500/10 text-rose-300'
+        DELETE: 'bg-rose-500/10 text-rose-300',
     };
 
     const statusColor = request.status < 400 ? 'text-emerald-400' : 'text-rose-400';
@@ -145,19 +144,19 @@ function loadDashboardData() {
     document.querySelector('h1 span.skeleton-loader').outerHTML = dashboardData.user.name;
 
     // Update stats using IDs
-    document.getElementById('totalRequests').outerHTML = 
+    document.getElementById('totalRequests').outerHTML =
         `<h3 class="text-2xl font-bold">${dashboardData.stats.totalRequests.toLocaleString()}</h3>`;
-    document.getElementById('requestGrowth').outerHTML = 
+    document.getElementById('requestGrowth').outerHTML =
         `<div class="text-sm text-zinc-400"><span class="text-emerald-400">↑ ${dashboardData.stats.requestGrowth}%</span> from last month</div>`;
 
-    document.getElementById('activeKeys').outerHTML = 
+    document.getElementById('activeKeys').outerHTML =
         `<h3 class="text-2xl font-bold">${dashboardData.stats.activeApiKeys}</h3>`;
-    document.getElementById('manageKeys').outerHTML = 
+    document.getElementById('manageKeys').outerHTML =
         `<a href="/app/api-keys" class="text-sm text-fuchsia-400 hover:text-fuchsia-300 transition-colors">Manage keys →</a>`;
 
-    document.getElementById('latestRequestTime').outerHTML = 
+    document.getElementById('latestRequestTime').outerHTML =
         `<h3 class="text-lg font-bold">${dashboardData.stats.latestRequest.time}</h3>`;
-    document.getElementById('latestRequestEndpoint').outerHTML = 
+    document.getElementById('latestRequestEndpoint').outerHTML =
         `<p class="text-sm text-zinc-400 truncate">${dashboardData.stats.latestRequest.endpoint}</p>`;
 
     // Update recent requests table
@@ -175,7 +174,7 @@ function loadDashboardData() {
     }
 
     // Show view all link
-    document.querySelector('.flex.items-center.justify-between div').outerHTML = 
+    document.querySelector('.flex.items-center.justify-between div').outerHTML =
         `<a href="/dashboard/requests" class="text-violet-400 hover:text-violet-300 transition-colors text-sm">View all →</a>`;
 
     // Reinitialize Lucide icons
@@ -183,7 +182,7 @@ function loadDashboardData() {
 
     // Show all elements with fade-in animation
     setTimeout(() => {
-        document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+        document.querySelectorAll('.fade-in').forEach((el) => el.classList.add('visible'));
     }, 100);
 }
 

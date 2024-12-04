@@ -1,14 +1,8 @@
-{# templates/api_keys.html #}
-{% extends "base.html" %}
-{% block title %}API Keys - lagden.dev{% endblock %}
-{% block extra_css %}
+{# templates/api_keys.html #} {% extends "base.html" %} {% block title %}API Keys - lagden.dev{%
+endblock %} {% block extra_css %}
 <link rel="stylesheet" href="/static/css/app_dashboard.css" />
 <link rel="stylesheet" href="/static/css/app_api_keys.css" />
-{% endblock %}
-{% block extra_js %}
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block extra_js %} {% endblock %} {% block content %}
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="mb-12">
         <div class="flex items-center justify-between">
@@ -16,7 +10,10 @@
                 <h1 class="text-4xl font-bold tracking-tight">API Keys</h1>
                 <p class="text-zinc-400 mt-2">Manage your API keys and access tokens</p>
             </div>
-            <button id="createKeyBtn" class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
+            <button
+                id="createKeyBtn"
+                class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+            >
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 <span>Create New Key</span>
             </button>
@@ -24,11 +21,15 @@
     </div>
 
     <!-- API Keys List -->
-    <div class="card-glow bg-zinc-900/30 rounded-xl backdrop-blur-sm border border-white/5 overflow-hidden">
+    <div
+        class="card-glow bg-zinc-900/30 rounded-xl backdrop-blur-sm border border-white/5 overflow-hidden"
+    >
         <table class="w-full">
             <thead>
                 <tr class="border-b border-white/5">
-                    <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Description</th>
+                    <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">
+                        Description
+                    </th>
                     <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">API Key</th>
                     <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Roles</th>
                     <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Created</th>
@@ -50,20 +51,37 @@
 
 <!-- Create API Key Modal -->
 <div id="createKeyModal" class="modal">
-    <div class="modal-content card-glow bg-zinc-900/30 p-6 rounded-xl backdrop-blur-sm border border-white/5 max-w-md w-full mx-4">
+    <div
+        class="modal-content card-glow bg-zinc-900/30 p-6 rounded-xl backdrop-blur-sm border border-white/5 max-w-md w-full mx-4"
+    >
         <h2 class="text-2xl font-semibold mb-4">Create New API Key</h2>
         <div class="mb-6">
-            <label for="keyDescription" class="block text-sm font-medium text-zinc-400 mb-2">Description</label>
-            <input type="text" id="keyDescription" class="w-full bg-zinc-800/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500 transition-colors" placeholder="e.g., Production API Key">
+            <label for="keyDescription" class="block text-sm font-medium text-zinc-400 mb-2"
+                >Description</label
+            >
+            <input
+                type="text"
+                id="keyDescription"
+                class="w-full bg-zinc-800/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500 transition-colors"
+                placeholder="e.g., Production API Key"
+            />
         </div>
         <div class="flex justify-end space-x-4">
-            <button id="cancelCreateKey" class="px-4 py-2 text-zinc-400 hover:text-white transition-colors">Cancel</button>
-            <button id="confirmCreateKey" class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors">Create Key</button>
+            <button
+                id="cancelCreateKey"
+                class="px-4 py-2 text-zinc-400 hover:text-white transition-colors"
+            >
+                Cancel
+            </button>
+            <button
+                id="confirmCreateKey"
+                class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+                Create Key
+            </button>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script src="/static/js/app_api_keys.js"></script>
 {% endblock %}

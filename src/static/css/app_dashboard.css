@@ -10,9 +10,9 @@
     inset: -1px;
     background: linear-gradient(
         to bottom right,
-        rgba(139, 92, 246, 0.1),  /* violet-500 */
-        rgba(217, 70, 239, 0.1),   /* fuchsia-500 */
-        rgba(244, 63, 94, 0.1)     /* rose-500 */
+        rgba(139, 92, 246, 0.1),
+        /* violet-500 */ rgba(217, 70, 239, 0.1),
+        /* fuchsia-500 */ rgba(244, 63, 94, 0.1) /* rose-500 */
     );
     border-radius: inherit;
     z-index: -2;
@@ -111,11 +111,7 @@ a:hover .external-link {
     height: 2px;
     bottom: -2px;
     left: 0;
-    background: linear-gradient(
-        to right,
-        rgb(139, 92, 246),
-        rgb(217, 70, 239)
-    );
+    background: linear-gradient(to right, rgb(139, 92, 246), rgb(217, 70, 239));
     transition: width 0.3s ease;
 }
 
@@ -138,6 +134,8 @@ a:hover .external-link {
 }
 
 /* Add smooth transitions for all interactive elements */
-a, button, input {
+a,
+button,
+input {
     transition: all 0.2s ease;
 }
