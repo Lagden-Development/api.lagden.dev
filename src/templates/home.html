@@ -1,0 +1,123 @@
+{# templates/home.html #} {% extends "base.html" %} {% block title %}Home - lagden.dev{% endblock%}
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/home.css" />
+{% endblock %} {% block head_scripts %} {% endblock %} {% block content %}
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <div class="text-center mb-24 space-y-6">
+        <h1 class="text-6xl font-bold tracking-tight gradient-text">Simple. Powerful. Reliable.</h1>
+        <p class="text-xl text-zinc-400 max-w-2xl mx-auto mono leading-relaxed">
+            Access our comprehensive API documentation<br />and get started with development in
+            minutes.
+        </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-24">
+        <a href="https://docs.api.lagden.dev" class="group">
+            <div
+                class="card-glow bg-zinc-900/30 p-8 rounded-xl backdrop-blur-sm border border-white/5 h-[200px] flex flex-col relative overflow-hidden"
+            >
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="p-2.5 bg-violet-500/10 rounded-lg">
+                        <i
+                            data-lucide="book-open"
+                            class="w-6 h-6 text-violet-300 transition-all duration-300 group-hover:scale-110"
+                        ></i>
+                    </div>
+                    <h2 class="text-lg font-semibold text-white tracking-tight hover-underline">
+                        GitBook Docs
+                    </h2>
+                </div>
+                <p
+                    class="text-zinc-400 group-hover:text-zinc-300 transition-colors leading-relaxed"
+                >
+                    Comprehensive guides and tutorials to help you get started with our API.
+                </p>
+                <i data-lucide="external-link" class="external-link w-4 h-4"></i>
+            </div>
+        </a>
+
+        <a href="/docs" class="group">
+            <div
+                class="card-glow bg-zinc-900/30 p-8 rounded-xl backdrop-blur-sm border border-white/5 h-[200px] flex flex-col relative overflow-hidden"
+            >
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="p-2.5 bg-fuchsia-500/10 rounded-lg">
+                        <i
+                            data-lucide="file-json"
+                            class="w-6 h-6 text-fuchsia-300 transition-all duration-300 group-hover:scale-110"
+                        ></i>
+                    </div>
+                    <h2 class="text-lg font-semibold text-white tracking-tight hover-underline">
+                        Swagger UI
+                    </h2>
+                </div>
+                <p
+                    class="text-zinc-400 group-hover:text-zinc-300 transition-colors leading-relaxed"
+                >
+                    Interactive API documentation with OpenAPI specification explorer.
+                </p>
+                <i data-lucide="external-link" class="external-link w-4 h-4"></i>
+            </div>
+        </a>
+
+        <a href="/redoc" class="group">
+            <div
+                class="card-glow bg-zinc-900/30 p-8 rounded-xl backdrop-blur-sm border border-white/5 h-[200px] flex flex-col relative overflow-hidden"
+            >
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="p-2.5 bg-rose-500/10 rounded-lg">
+                        <i
+                            data-lucide="component"
+                            class="w-6 h-6 text-rose-300 transition-all duration-300 group-hover:scale-110"
+                        ></i>
+                    </div>
+                    <h2 class="text-lg font-semibold text-white tracking-tight hover-underline">
+                        ReDoc
+                    </h2>
+                </div>
+                <p
+                    class="text-zinc-400 group-hover:text-zinc-300 transition-colors leading-relaxed"
+                >
+                    Clean and elegant reference documentation for your endpoints.
+                </p>
+                <i data-lucide="external-link" class="external-link w-4 h-4"></i>
+            </div>
+        </a>
+    </div>
+
+    <div class="relative group floating">
+        <div
+            class="absolute -inset-1 bg-gradient-to-r from-violet-600/30 via-fuchsia-600/30 to-rose-600/30 rounded-xl blur-lg transition duration-500 group-hover:opacity-100 opacity-75"
+        ></div>
+        <div
+            class="relative bg-zinc-900/50 border border-white/5 rounded-xl p-12 backdrop-blur-sm text-center"
+        >
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+                <h2 class="text-2xl font-semibold text-white tracking-tight">Join Our Community</h2>
+            </div>
+            <p class="text-zinc-400 mb-8 max-w-xl mx-auto leading-relaxed">
+                Connect with developers, share ideas, and get help from our growing community.
+            </p>
+            <a
+                href="https://discord.gg/zXumZ5jsBF"
+                class="inline-flex items-center space-x-3 bg-[#5865F2] hover:bg-[#4752C4] px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#5865F2]/20"
+            >
+                <svg
+                    role="img"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    fill="white"
+                >
+                    <title>Discord</title>
+                    <path
+                        d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
+                    />
+                </svg>
+                <span class="font-medium">Join Discord Server</span>
+            </a>
+        </div>
+    </div>
+</main>
+{% endblock %} {% block scripts %} {% endblock %}

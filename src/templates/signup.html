@@ -1,0 +1,127 @@
+{# templates/signup.html #} {% extends "base.html" %} {% block title %}Sign Up - lagden.dev{%
+endblock %} {% block extra_css %}
+<link rel="stylesheet" href="/static/css/signup.css" />
+{% endblock %} {% block head_scripts %}
+<script src="https://www.google.com/recaptcha/api.js?render=6LdKgI8qAAAAAFCPWoutXxb3bRw2CdEAzRHnYP5P&onload=onRecaptchaLoad" async defer></script>
+{% endblock %} {% block content %}
+<main class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <div class="form-glow bg-zinc-900/30 p-8 rounded-xl backdrop-blur-sm border border-white/5">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold tracking-tight">Create your account</h1>
+            <p class="text-zinc-400 mt-2">Get started with our API services</p>
+        </div>
+
+        <form id="signupForm" class="space-y-6">
+            <div>
+                <label for="name" class="block text-sm font-medium text-zinc-400 mb-2"
+                    >Full Name</label
+                >
+                <input
+                    type="text"
+                    id="name"
+                    class="w-full px-4 py-2.5 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-colors"
+                    placeholder="John Doe"
+                    required
+                />
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-zinc-400 mb-2"
+                    >Email</label
+                >
+                <input
+                    type="email"
+                    id="email"
+                    class="w-full px-4 py-2.5 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-colors"
+                    placeholder="you@example.com"
+                    required
+                />
+            </div>
+
+            <div>
+                <label for="organization" class="block text-sm font-medium text-zinc-400 mb-2">
+                    Organization <span class="text-zinc-600">(optional)</span>
+                </label>
+                <input
+                    type="text"
+                    id="organization"
+                    class="w-full px-4 py-2.5 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-colors"
+                    placeholder="Company Name"
+                />
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-zinc-400 mb-2"
+                    >Password</label
+                >
+                <div class="relative">
+                    <input
+                        type="password"
+                        id="password"
+                        class="w-full px-4 py-2.5 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-colors"
+                        placeholder="••••••••"
+                        required
+                    />
+                    <button
+                        type="button"
+                        class="toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors"
+                    >
+                        <i data-lucide="eye" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <div class="mt-2 space-y-2">
+                    <div class="password-strength-meter">
+                        <div id="strengthMeter"></div>
+                    </div>
+                    <p id="passwordHint" class="text-xs text-zinc-500"></p>
+                </div>
+            </div>
+
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-zinc-400 mb-2"
+                    >Confirm Password</label
+                >
+                <div class="relative">
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        class="w-full px-4 py-2.5 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-colors"
+                        placeholder="••••••••"
+                        required
+                    />
+                    <button
+                        type="button"
+                        class="toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors"
+                    >
+                        <i data-lucide="eye" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="errorMessage" class="hidden">
+                <p class="text-rose-400 text-sm"></p>
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-violet-500 hover:bg-violet-600 text-white font-medium py-2.5 rounded-lg transition-colors relative group disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+            >
+                <span class="relative z-10">Create Account</span>
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity blur"
+                ></div>
+            </button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-zinc-400">
+            Already have an account?
+            <a href="/login" class="text-violet-400 hover:text-violet-300 transition-colors"
+                >Sign in</a
+            >
+        </p>
+    </div>
+</main>
+{% endblock %} {% block scripts %}
+<script src="/static/js/signup.js"></script>
+{% endblock %}
