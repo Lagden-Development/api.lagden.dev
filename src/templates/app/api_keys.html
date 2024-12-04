@@ -3,67 +3,9 @@
 {% block title %}API Keys - lagden.dev{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="/static/css/app_dashboard.css" />
-<style>
-    /* API Keys specific styles */
-    .key-secret {
-        -webkit-text-security: disc;
-    }
-    .key-secret.visible {
-        -webkit-text-security: none;
-    }
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 50;
-    }
-    .modal.active {
-        display: flex;
-    }
-    .modal-content {
-        animation: modalSlideIn 0.3s ease;
-    }
-    @keyframes modalSlideIn {
-        from {
-            transform: translateY(-20px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-    .role-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.25rem 0.5rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        transition: all 0.2s;
-    }
-    .role-badge.default {
-        background-color: rgba(139, 92, 246, 0.1);
-        color: rgb(167, 139, 250);
-    }
-    .role-badge.cms {
-        background-color: rgba(236, 72, 153, 0.1);
-        color: rgb(244, 114, 182);
-    }
-    /* Add more role-specific styles as needed */
-    .roles-container {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-    }
-</style>
+<link rel="stylesheet" href="/static/css/app_api_keys.css" />
+{% endblock %}
+{% block extra_js %}
 {% endblock %}
 
 {% block content %}
