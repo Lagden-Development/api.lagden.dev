@@ -1,0 +1,154 @@
+{# templates/dashboard.html #}
+{% extends "base.html" %}
+{% block title %}Dashboard - lagden.dev{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/app_dashboard.css" />
+{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-12">
+        <h1 class="text-4xl font-bold tracking-tight">Welcome, <span class="skeleton-loader w-32 h-[36px] align-bottom"></span></h1>
+        <p class="text-zinc-400 mt-2">Manage your API access and monitor usage</p>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <!-- Total Requests Card -->
+        <div class="card-glow bg-zinc-900/30 p-6 rounded-xl backdrop-blur-sm border border-white/5">
+            <div class="flex items-center space-x-4 mb-4">
+                <div class="p-2.5 bg-violet-500/10 rounded-lg">
+                    <i data-lucide="activity" class="w-6 h-6 text-violet-300"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-zinc-400">Total Requests</p>
+                    <h3 id="totalRequests" class="skeleton-loader text-2xl font-bold w-24 h-8"></h3>
+                </div>
+            </div>
+            <div id="requestGrowth" class="skeleton-loader text-sm text-zinc-400 w-36 h-5"></div>
+        </div>
+
+        <!-- API Keys Card -->
+        <div class="card-glow bg-zinc-900/30 p-6 rounded-xl backdrop-blur-sm border border-white/5">
+            <div class="flex items-center space-x-4 mb-4">
+                <div class="p-2.5 bg-fuchsia-500/10 rounded-lg">
+                    <i data-lucide="key" class="w-6 h-6 text-fuchsia-300"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-zinc-400">Active API Keys</p>
+                    <h3 id="activeKeys" class="skeleton-loader text-2xl font-bold w-16 h-8"></h3>
+                </div>
+            </div>
+            <div id="manageKeys" class="skeleton-loader w-24 h-5"></div>
+        </div>
+
+        <!-- Latest Request Card -->
+        <div class="card-glow bg-zinc-900/30 p-6 rounded-xl backdrop-blur-sm border border-white/5">
+            <div class="flex items-center space-x-4 mb-4">
+                <div class="p-2.5 bg-rose-500/10 rounded-lg">
+                    <i data-lucide="clock" class="w-6 h-6 text-rose-300"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-zinc-400">Latest Request</p>
+                    <h3 id="latestRequestTime" class="skeleton-loader text-lg font-bold w-32 h-6"></h3>
+                </div>
+            </div>
+            <p id="latestRequestEndpoint" class="skeleton-loader w-48 h-5"></p>
+        </div>
+    </div>
+
+    <!-- Recent Requests -->
+    <div class="mb-12">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-semibold">Recent Requests</h2>
+            <div class="skeleton-loader w-20 h-6"></div>
+        </div>
+        <div class="card-glow bg-zinc-900/30 rounded-xl backdrop-blur-sm border border-white/5 overflow-hidden">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-white/5">
+                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Endpoint</th>
+                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Method</th>
+                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Status</th>
+                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Time</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTableBody">
+                    {% for i in range(4) %}
+                    <tr class="border-b border-white/5">
+                        <td class="py-4 px-6">
+                            <span class="skeleton-loader w-48 h-5"></span>
+                        </td>
+                        <td class="py-4 px-6">
+                            <span class="skeleton-loader w-16 h-7 rounded-full"></span>
+                        </td>
+                        <td class="py-4 px-6">
+                            <span class="skeleton-loader w-12 h-5"></span>
+                        </td>
+                        <td class="py-4 px-6">
+                            <span class="skeleton-loader w-24 h-5"></span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid md:grid-cols-3 gap-6">
+        <a href="/app/settings" class="group">
+            <div class="card-glow bg-zinc-900/30 p-8 rounded-xl backdrop-blur-sm border border-white/5 h-[200px] flex flex-col relative overflow-hidden">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="p-2.5 bg-violet-500/10 rounded-lg">
+                        <i data-lucide="settings" class="w-6 h-6 text-violet-300 transition-all duration-300 group-hover:scale-110"></i>
+                    </div>
+                    <h2 class="text-lg font-semibold text-white tracking-tight hover-underline">
+                        Account Settings
+                    </h2>
+                </div>
+                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors leading-relaxed">
+                    Manage your account preferences and security settings.
+                </p>
+            </div>
+        </a>
+
+        <a href="/app/api-keys" class="group">
+            <div class="card-glow bg-zinc-900/30 p-8 rounded-xl backdrop-blur-sm border border-white/5 h-[200px] flex flex-col relative overflow-hidden">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="p-2.5 bg-fuchsia-500/10 rounded-lg">
+                        <i data-lucide="key" class="w-6 h-6 text-fuchsia-300 transition-all duration-300 group-hover:scale-110"></i>
+                    </div>
+                    <h2 class="text-lg font-semibold text-white tracking-tight hover-underline">
+                        API Keys
+                    </h2>
+                </div>
+                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors leading-relaxed">
+                    Generate and manage your API keys and access tokens.
+                </p>
+            </div>
+        </a>
+
+        <a href="https://discord.gg/zXumZ5jsBF" class="group" target="_blank" rel="noopener noreferrer">
+            <div class="card-glow bg-zinc-900/30 p-8 rounded-xl backdrop-blur-sm border border-white/5 h-[200px] flex flex-col relative overflow-hidden">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="p-2.5 bg-[#5865F2]/10 rounded-lg">
+                        <i data-lucide="message-circle" class="w-6 h-6 text-[#5865F2] transition-all duration-300 group-hover:scale-110"></i>
+                    </div>
+                    <h2 class="text-lg font-semibold text-white tracking-tight hover-underline">
+                        Support
+                    </h2>
+                </div>
+                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors leading-relaxed">
+                    Join our Discord community for support and updates.
+                </p>
+                <i data-lucide="external-link" class="external-link w-4 h-4"></i>
+            </div>
+        </a>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/app_dashboard.js"></script>
+{% endblock %}
