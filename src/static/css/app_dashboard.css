@@ -1,0 +1,143 @@
+/* Card effects */
+.card-glow {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.card-glow::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(
+        to bottom right,
+        rgba(139, 92, 246, 0.1),  /* violet-500 */
+        rgba(217, 70, 239, 0.1),   /* fuchsia-500 */
+        rgba(244, 63, 94, 0.1)     /* rose-500 */
+    );
+    border-radius: inherit;
+    z-index: -2;
+}
+
+.card-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    z-index: -1;
+}
+
+.card-glow:hover {
+    transform: translateY(-2px);
+}
+
+.card-glow:hover::before {
+    background: linear-gradient(
+        to bottom right,
+        rgba(139, 92, 246, 0.2),
+        rgba(217, 70, 239, 0.2),
+        rgba(244, 63, 94, 0.2)
+    );
+}
+
+/* Skeleton loader animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton-loader {
+    display: inline-block;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 25%,
+        rgba(255, 255, 255, 0.08) 37%,
+        rgba(255, 255, 255, 0.03) 63%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: 4px;
+}
+
+/* Transition for content reveal */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+/* Table styles */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    font-weight: 500;
+}
+
+/* External link icon positioning */
+.external-link {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    color: rgb(161 161 170); /* zinc-400 */
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+a:hover .external-link {
+    opacity: 1;
+    transform: translate(-2px, -2px);
+}
+
+/* Hover underline animation */
+.hover-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.hover-underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(
+        to right,
+        rgb(139, 92, 246),
+        rgb(217, 70, 239)
+    );
+    transition: width 0.3s ease;
+}
+
+.group:hover .hover-underline::after {
+    width: 100%;
+}
+
+/* Method badge transitions */
+.rounded-full {
+    transition: all 0.2s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Add smooth transitions for all interactive elements */
+a, button, input {
+    transition: all 0.2s ease;
+}
