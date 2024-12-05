@@ -1,3 +1,5 @@
+/* global lucide, toastr */
+
 // static/js/shared.js
 
 // Initialize toastr options
@@ -11,6 +13,7 @@ toastr.options = {
 lucide.createIcons();
 
 // Utility function for handling error messages
+/* exported showError */
 function showError(formId, message) {
     const errorDiv = document.querySelector(`${formId} #errorMessage`);
     const errorText = errorDiv.querySelector('p');
@@ -26,6 +29,7 @@ function showError(formId, message) {
 }
 
 // Utility function for showing loading state on submit buttons
+/* exported setButtonLoading */
 function setButtonLoading(button, isLoading) {
     const span = button.querySelector('span');
     const originalText = span.textContent;

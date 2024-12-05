@@ -1,3 +1,5 @@
+/* global lucide, toastr, $ */
+
 const dashboardData = {
     user: {
         name: 'Failed to fetch user data',

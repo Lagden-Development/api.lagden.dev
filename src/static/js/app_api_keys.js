@@ -1,3 +1,5 @@
+/* global lucide, toastr */
+
 // Modal elements
 const createKeyModal = document.getElementById('createKeyModal');
 const createKeyBtn = document.getElementById('createKeyBtn');

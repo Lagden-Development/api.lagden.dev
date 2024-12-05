@@ -1,3 +1,5 @@
+/* global lucide, grecaptcha */
+
 // Helper functions for UI manipulation
 function setButtonLoading(button, isLoading) {
     const text = button.querySelector('span');
