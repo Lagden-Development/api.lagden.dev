@@ -124,4 +124,6 @@ class APIKeyHelper:
         key = api_keys.find_one({"_id": key_id})
         if not key:
             raise HTTPException(status_code=404, detail="API key not found")
-        return role in key.get("roles", [])
+        return role in key.get("roles", []) or "*" in key.get(
+            "roles", []
+        )  # Allow all roles with "*"

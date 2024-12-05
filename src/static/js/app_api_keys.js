@@ -132,6 +132,7 @@ function getRoleDescription(role) {
     const descriptions = {
         default: 'Access to all public endpoints',
         cms: 'Access to CMS system endpoints',
+        '*': 'Wildcard role with access to all endpoints',
         // Add more role descriptions as needed
     };
     return descriptions[role.toLowerCase()] || role;
