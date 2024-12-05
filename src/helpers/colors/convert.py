@@ -25,6 +25,19 @@ def hex_to_rgb(hex_color: str) -> Tuple[int, int, int]:
     return tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
 
 
+def rgb_to_hex(rgb: Tuple[int, int, int]) -> str:
+    """
+    Convert RGB tuple to hex color.
+
+    Args:
+        rgb: Tuple of RGB values
+
+    Returns:
+        Hex color string
+    """
+    return "#{:02x}{:02x}{:02x}".format(*rgb)
+
+
 def parse_rgb(rgb_str: str) -> Tuple[int, int, int]:
     """
     Parse RGB string to tuple.
