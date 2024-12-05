@@ -1,21 +1,26 @@
 """
 This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
+
+This router contains the image tools endpoints.
+
+Endpoints:
+    /dominant_colors: Extract dominant colors from an image URL.
 """
 
-from io import BytesIO
+# Python Standard Library Imports
 from typing import List
+from io import BytesIO
 
-import cv2
+# Third-Party Imports
 from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
-import numpy as np
-from PIL import Image
 from pydantic import BaseModel, HttpUrl
 import requests
-from sklearn.cluster import KMeans
 
+# Helper Imports
 from helpers.api_keys import APIKeyHelper
 from helpers.api_logs import APILogHelper
+from helpers.colors.calc import calculate_dominant_colors
 
 router = APIRouter(
     tags=["Image Tools"],
@@ -93,14 +98,13 @@ async def extract_dominant_colors(
         url = str(url)
 
         allowed_extensions = ["jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff"]
-
         if not any(url.lower().endswith(ext) for ext in allowed_extensions):
             raise HTTPException(
                 status_code=400,
                 detail="Invalid image URL. Supported formats: JPG, JPEG, PNG, GIF, BMP, WEBP, TIFF",
             )
 
-        # Download and process image
+        # Download image
         try:
             image_response = requests.get(str(url), timeout=10)
             image_io_stream = BytesIO(image_response.content)
@@ -110,42 +114,36 @@ async def extract_dominant_colors(
                 status_code=400, detail=f"Failed to download the image: {str(e)}"
             ) from e
 
-        # Image processing
-        try:
-            image = Image.open(image_io_stream)
-            image_io_stream = BytesIO()
-            image.save(image_io_stream, "PNG")
-            image_io_stream.seek(0)
+        # Process image using helper function
+        result = calculate_dominant_colors(image_io_stream, n_colors)
 
-            image_byte_string = image_io_stream.read()
-            image_np_array = np.frombuffer(image_byte_string, dtype=np.uint8)
-            image = cv2.imdecode(image_np_array, cv2.IMREAD_COLOR)
-
-            pixels = image.reshape((-1, 3))
-            image = np.float32(pixels)
-
-            # Extract colors
-            kmeans = KMeans(n_clusters=n_colors)
-            kmeans.fit(pixels)
-            colors = kmeans.cluster_centers_.astype(int).tolist()
-            hex_colors = [
-                f"#{int(color[0]):02x}{int(color[1]):02x}{int(color[2]):02x}"
-                for color in colors
-            ]
-
-            return DominantColorsResponse(
-                ok=True,
-                status=200,
-                message="Successfully extracted dominant colors",
-                data={
-                    "hex_colors": hex_colors,
-                    "rgb_colors": colors,
-                },
-            )
-        except Exception as e:
+        if not result["ok"]:
             raise HTTPException(
-                status_code=400, detail=f"Error processing image: {str(e)}"
-            ) from e
+                status_code=result.get("status", 400),
+                detail=result.get("detail", "Error processing image"),
+            )
+
+        # Convert the helper response to match the API response format
+        hex_colors = result["colors"]
+        # Convert hex colors to RGB for the response
+        rgb_colors = [
+            [
+                int(color[1:3], 16),
+                int(color[3:5], 16),
+                int(color[5:7], 16),
+            ]
+            for color in hex_colors
+        ]
+
+        return DominantColorsResponse(
+            ok=True,
+            status=200,
+            message="Successfully extracted dominant colors",
+            data={
+                "hex_colors": hex_colors,
+                "rgb_colors": rgb_colors,
+            },
+        )
 
     except HTTPException as e:
         status_code = e.status_code
