@@ -35,7 +35,7 @@ def rgb_to_hex(rgb: Tuple[int, int, int]) -> str:
     Returns:
         Hex color string
     """
-    return "#{:02x}{:02x}{:02x}".format(*rgb)
+    return f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
 
 
 def parse_rgb(rgb_str: str) -> Tuple[int, int, int]:
@@ -60,3 +60,34 @@ def parse_rgb(rgb_str: str) -> Tuple[int, int, int]:
         raise ValueError("RGB values must be between 0 and 255")
 
     return rgb
+
+
+if __name__ == "__main__":
+    # Test the hex_to_rgb function
+    assert hex_to_rgb("#ffffff") == (255, 255, 255)
+    assert hex_to_rgb("#000000") == (0, 0, 0)
+    assert hex_to_rgb("#ff0000") == (255, 0, 0)
+    assert hex_to_rgb("#00ff00") == (0, 255, 0)
+    assert hex_to_rgb("#0000ff") == (0, 0, 255)
+
+    # Test the rgb_to_hex function
+    assert rgb_to_hex((255, 255, 255)) == "#ffffff"
+    assert rgb_to_hex((0, 0, 0)) == "#000000"
+    assert rgb_to_hex((255, 0, 0)) == "#ff0000"
+    assert rgb_to_hex((0, 255, 0)) == "#00ff00"
+    assert rgb_to_hex((0, 0, 255)) == "#0000ff"
+
+    # Test the parse_rgb function
+    assert parse_rgb("255, 255, 255") == (255, 255, 255)
+    assert parse_rgb("0, 0, 0") == (0, 0, 0)
+    assert parse_rgb("255, 0, 0") == (255, 0, 0)
+    assert parse_rgb("0, 255, 0") == (0, 255, 0)
+    assert parse_rgb("0, 0, 255") == (0, 0, 255)
+
+    # Test the parse_rgb function with invalid values
+    try:
+        parse_rgb("256, 255, 255")
+    except ValueError as e:
+        assert str(e) == "RGB values must be between 0 and 255"
+
+    print("All tests passed!")
