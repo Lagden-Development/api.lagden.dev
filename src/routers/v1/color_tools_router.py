@@ -1,3 +1,13 @@
+"""
+This project is licensed under a non-commercial open-source license.
+View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
+
+This is the router for color tools.
+
+Endpoints:
+- /check_brightness: Analyze the brightness of a color and determine if it's dark or light.
+"""
+
 from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
 from pydantic import BaseModel
 
@@ -15,6 +25,16 @@ router = APIRouter(
 
 
 class ColorBrightnessResponse(BaseModel):
+    """
+    Response model for color brightness analysis.
+
+    Attributes:
+        ok (bool): Indicates if the request was successful.
+        status (int): HTTP status code of the response.
+        message (str): Description or message about the response.
+        data (dict): Dictionary containing the color brightness data.
+    """
+
     ok: bool
     status: int
     message: str
