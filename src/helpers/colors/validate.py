@@ -30,6 +30,6 @@ def validate_color(color: str, color_format: ColorFormat) -> bool:
     if color_format == ColorFormat.HEX:
         hex_pattern = r"^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
         return bool(re.match(hex_pattern, color))
-    else:  # RGB
-        rgb_pattern = r"^(?:rgb\()?\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)?$"
-        return bool(re.match(rgb_pattern, color))
+
+    rgb_pattern = r"^(?:rgb\()?\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)?$"
+    return bool(re.match(rgb_pattern, color))
