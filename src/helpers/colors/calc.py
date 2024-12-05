@@ -1,3 +1,11 @@
+"""
+This project is licensed under a non-commercial open-source license.
+View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
+
+This module contains helper functions for calculating color brightness.
+"""
+
+
 def calculate_brightness(r: int, g: int, b: int) -> float:
     """
     Calculate perceived brightness using the formula:

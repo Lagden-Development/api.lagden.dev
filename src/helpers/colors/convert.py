@@ -1,3 +1,10 @@
+"""
+This project is licensed under a non-commercial open-source license.
+View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
+
+This module contains helper functions for converting color formats.
+"""
+
 import re
 from typing import Tuple
 
