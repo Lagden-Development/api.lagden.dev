@@ -42,12 +42,12 @@
             {% else %}
             <div class="flex items-center space-x-6">
                 <a
-                    onclick="runLogout()"
-                    class="text-white/70 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors relative group"
+                    onclick="handleLogout()"
+                    class="text-white/70 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors relative group cursor-pointer"
                 >
                     <span class="relative z-10">Logout</span>
                     <div
-                        class="absolute inset-0 bg-white/5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                        class="absolute inset-0 bg-white/5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                     ></div>
                 </a>
                 <a href="/app" class="relative group">
