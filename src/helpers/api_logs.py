@@ -10,7 +10,7 @@ from typing import Dict, Any, List, Optional, Union
 from datetime import datetime
 
 # Third-Party Imports
-from fastapi import HTTPException
+from fastapi.exceptions import HTTPException
 
 # Database Imports
 from db import api_keys, api_logs
