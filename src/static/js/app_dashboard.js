@@ -11,7 +11,12 @@ const dashboardData = {
             time: 'Never',
             endpoint: 'No requests yet',
         },
-        requestGrowth: 0,
+        requestGrowth: {
+            value: 0,
+            trend: '',
+            isIncrease: true,
+            percentage: 0
+        },
     },
     recentRequests: [],
 };
@@ -52,7 +57,25 @@ async function fetchDashboardData() {
         });
 
         if (totalLogsResponse.status === 'success') {
-            dashboardData.stats.totalRequests = totalLogsResponse.data;
+            const { total, this_month, last_month } = totalLogsResponse.data;
+            const difference = this_month - last_month;
+            let percentageChange = 0;
+            
+            if (last_month === 0 && this_month > 0) {
+                // Handle case where last month was 0
+                percentageChange = this_month * 100;
+            } else if (last_month > 0) {
+                // Calculate percentage change when last month wasn't 0
+                percentageChange = ((this_month - last_month) / last_month) * 100;
+            }
+
+            dashboardData.stats.totalRequests = total;
+            dashboardData.stats.requestGrowth = {
+                value: Math.abs(difference),
+                isIncrease: difference >= 0,
+                percentage: Math.abs(Math.round(percentageChange)),
+                trend: `${difference >= 0 ? '↑' : '↓'} ${Math.abs(Math.round(percentageChange))}% from last month`
+            };
         } else {
             toastr.error(totalLogsResponse.message);
         }
@@ -149,7 +172,11 @@ function loadDashboardData() {
     document.getElementById('totalRequests').outerHTML =
         `<h3 class="text-2xl font-bold">${dashboardData.stats.totalRequests.toLocaleString()}</h3>`;
     document.getElementById('requestGrowth').outerHTML =
-        `<div class="text-sm text-zinc-400"><span class="text-emerald-400">↑ ${dashboardData.stats.requestGrowth}%</span> from last month</div>`;
+        `<div class="text-sm text-zinc-400">
+            <span class="${dashboardData.stats.requestGrowth.isIncrease ? 'text-emerald-400' : 'text-rose-400'}">
+                ${dashboardData.stats.requestGrowth.trend}
+            </span>
+        </div>`;
 
     document.getElementById('activeKeys').outerHTML =
         `<h3 class="text-2xl font-bold">${dashboardData.stats.activeApiKeys}</h3>`;
@@ -177,7 +204,7 @@ function loadDashboardData() {
 
     // Show view all link
     document.querySelector('.flex.items-center.justify-between div').outerHTML =
-        `<a href="/dashboard/requests" class="text-violet-400 hover:text-violet-300 transition-colors text-sm">View all →</a>`;
+        `<a href="/app/requests" class="text-violet-400 hover:text-violet-300 transition-colors text-sm">View all →</a>`;
 
     // Reinitialize Lucide icons
     lucide.createIcons();
