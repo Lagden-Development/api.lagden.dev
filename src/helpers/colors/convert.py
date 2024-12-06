@@ -1,3 +1,4 @@
+# /src/helpers/colors/convert.py
 """
 This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
@@ -5,8 +6,9 @@ View the full license here: https://github.com/Lagden-Development/.github/blob/m
 This module contains helper functions for converting color formats.
 """
 
-import re
+# Python Standard Library Imports
 from typing import Tuple
+import re
 
 
 def hex_to_rgb(hex_color: str) -> Tuple[int, int, int]:

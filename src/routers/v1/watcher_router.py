@@ -1,13 +1,23 @@
+# /src/routers/v1/watcher_router.py
+
 """
 This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
+
+This file contains the watcher API routes for user presence data.
 """
 
-from typing import Optional, List, Union
+# Python Standard Library Imports
 from datetime import datetime
-from fastapi import APIRouter, HTTPException
+from typing import Optional, List, Union
+
+# Third-Party Imports
+from fastapi import APIRouter
+from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+
+# Database Imports
 from db import users
 
 

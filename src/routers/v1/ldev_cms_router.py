@@ -1,20 +1,27 @@
+# /src/routers/v1/ldev_cms_router.py
 """
 This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
 """
 
-import os
-import re
-import logging
+
+# Python Standard Library Imports
 from datetime import datetime
 from typing import List, Optional
-import httpx
-from pydantic import BaseModel
-from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
-from fastapi.responses import JSONResponse
-from dotenv import load_dotenv
-import contentful
+import logging
+import os
+import re
 
+# Third-Party Imports
+from dotenv import load_dotenv
+from fastapi import APIRouter, Query, BackgroundTasks
+from fastapi.exceptions import HTTPException
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+import contentful
+import httpx
+
+# Helper Imports
 from helpers.api_keys import APIKeyHelper
 from helpers.api_logs import APILogHelper
 
@@ -263,6 +270,16 @@ async def get_people(
     background_tasks: BackgroundTasks,
     api_key: str = Query(..., description="API key for authentication"),
 ):
+    """
+    Get all people from the LDEV CMS.
+
+    Args:
+        background_tasks (BackgroundTasks): Background task manager
+        api_key (str): API key for authentication
+
+    Returns:
+        List[Person]: List of people from the CMS
+    """
     status_code = 200
     error_message = None
     key_id = None
@@ -307,6 +324,17 @@ async def get_person(
     background_tasks: BackgroundTasks,
     api_key: str = Query(..., description="API key for authentication"),
 ):
+    """
+    Get a specific person by their slug.
+
+    Args:
+        slug (str): The person's slug
+        background_tasks (BackgroundTasks): Background task manager
+        api_key (str): API key for authentication
+
+    Returns:
+        Person: The person's profile
+    """
     status_code = 200
     error_message = None
     key_id = None
@@ -349,6 +377,16 @@ async def get_projects(
     background_tasks: BackgroundTasks,
     api_key: str = Query(..., description="API key for authentication"),
 ):
+    """
+    Get all projects from the LDEV CMS.
+
+    Args:
+        background_tasks (BackgroundTasks): Background task manager
+        api_key (str): API key for authentication
+
+    Returns:
+        List[Project]: List of projects from the CMS
+    """
     status_code = 200
     error_message = None
     key_id = None
@@ -400,6 +438,17 @@ async def get_project(
     background_tasks: BackgroundTasks,
     api_key: str = Query(..., description="API key for authentication"),
 ):
+    """
+    Get a specific project by its slug.
+
+    Args:
+        slug (str): The project's slug
+        background_tasks (BackgroundTasks): Background task manager
+        api_key (str): API key for authentication
+
+    Returns:
+        Project: The project's details
+    """
     status_code = 200
     error_message = None
     key_id = None
@@ -444,6 +493,18 @@ async def get_project_commits(
     api_key: str = Query(..., description="API key for authentication"),
     limit: int = 10,
 ):
+    """
+    Get the latest commits for a project's GitHub repository.
+
+    Args:
+        slug (str): The project's slug
+        background_tasks (BackgroundTasks): Background task manager
+        api_key (str): API key for authentication
+        limit (int): Number of commits to fetch (default: 10)
+
+    Returns:
+        CommitsResponse: Response containing the project's commits
+    """
     status_code = 200
     error_message = None
     key_id = None

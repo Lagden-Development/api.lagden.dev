@@ -1,3 +1,4 @@
+# /src/routers/v1/color_tools_router.py
 """
 This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
@@ -8,15 +9,17 @@ Endpoints:
 - /check_brightness: Analyze the brightness of a color and determine if it's dark or light.
 """
 
-from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
+# Third-Party Imports
+from fastapi import APIRouter, Query, BackgroundTasks
+from fastapi.exceptions import HTTPException
 from pydantic import BaseModel
 
-from helpers.colors.validate import ColorFormat, validate_color
-from helpers.colors.convert import hex_to_rgb, parse_rgb
-from helpers.colors.calc import calculate_brightness
-
+# Helper Imports
 from helpers.api_keys import APIKeyHelper
 from helpers.api_logs import APILogHelper
+from helpers.colors.calc import calculate_brightness
+from helpers.colors.convert import hex_to_rgb, parse_rgb
+from helpers.colors.validate import ColorFormat, validate_color
 
 
 router = APIRouter(

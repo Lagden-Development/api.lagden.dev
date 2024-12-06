@@ -1,9 +1,12 @@
+# /src/routers/v1/main_router.py
 """
 This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
+
+This file contains the main router for the V1 API.
 """
 
-# Import the required modules
+# Third-Party Libraries
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 

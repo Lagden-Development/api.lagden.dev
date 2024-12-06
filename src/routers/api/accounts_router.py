@@ -1,6 +1,9 @@
+# /src/routers/api/accounts_router.py
 """
 This project is licensed under a non-commercial open-source license.
 View the full license here: https://github.com/Lagden-Development/.github/blob/main/LICENSE.
+
+This file contains the API routes for account management.
 """
 
 # Python Standard Library Imports
@@ -9,10 +12,13 @@ import os
 import re
 
 # Third-Party Imports
-from fastapi import APIRouter, HTTPException, Response, Request, Depends, Cookie
+from fastapi import APIRouter, Cookie, Depends
+from fastapi.exceptions import HTTPException
+from fastapi.requests import Request
+from fastapi.responses import Response
 from pydantic import BaseModel, EmailStr, Field, field_validator
-import httpx
 import bcrypt
+import httpx
 
 # Helper Imports
 from helpers.accounts import AccountHelper
