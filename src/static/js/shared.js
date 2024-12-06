@@ -1,4 +1,4 @@
-/* global lucide, toastr */
+/* global lucide, toastr, $ */
 
 // static/js/shared.js
 
@@ -45,3 +45,24 @@ function setButtonLoading(button, isLoading) {
 
     return originalText;
 }
+
+// Utility function for handling form submission
+/* exported handleLogout */
+function handleLogout() {
+    $.ajax({
+      url: '/api/accounts/logout',
+      method: 'POST',
+      xhrFields: {
+        withCredentials: true // Include cookies in the request
+      },
+      success: function(response) {
+        console.log(response.message);
+        window.location.href = '/';
+      },
+      error: function(xhr, status, error) {
+        const errorMessage = xhr.responseJSON?.detail || 'Logout failed. Please try again.';
+        toastr.error(errorMessage, 'Error');
+        console.error('Logout error:', error);
+      }
+    });
+  }
