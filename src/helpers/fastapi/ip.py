@@ -5,7 +5,7 @@ View the full license here: https://github.com/Lagden-Development/.github/blob/m
 This snippet is a helper function to retrieve the client's IP address from a FastAPI request object.
 """
 
-from fastapi import Request
+from fastapi.requests import Request
 
 
 def get_client_ip(request: Request) -> str:
