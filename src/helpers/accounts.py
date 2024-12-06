@@ -11,7 +11,8 @@ from datetime import datetime
 import uuid
 
 # Third-Party Imports
-from fastapi import HTTPException, Response, Request
+from fastapi import Response, Request
+from fastapi.exceptions import HTTPException
 
 # Helper Imports
 from helpers.fastapi.ip import get_client_ip
@@ -49,6 +50,48 @@ class AccountHelper:
         }
         accounts.insert_one(account)
         return account
+
+    @staticmethod
+    async def update_account_name(account_id: str, name: str) -> None:
+        """Update an account's name"""
+        accounts.update_one({"_id": account_id}, {"$set": {"name": name}})
+
+    @staticmethod
+    async def update_account_org(account_id: str, org: str) -> None:
+        """Update an account's organization"""
+        accounts.update_one({"_id": account_id}, {"$set": {"org": org}})
+
+    @staticmethod
+    async def add_email_to_account(account_id: str, email: str) -> None:
+        """Add an email to an account"""
+        accounts.update_one(
+            {"_id": account_id, "emails.address": {"$ne": email}},
+            {"$push": {"emails": {"address": email, "verified": False}}},
+        )
+
+    @staticmethod
+    async def remove_email_from_account(account_id: str, email: str) -> None:
+        """Remove an email from an account"""
+
+        # Check if the email is the primary email
+        account = accounts.find_one({"_id": account_id})
+
+        found = False
+        for email_address in account["emails"]:
+            if email_address["address"] == email:
+                if email_address["primary"]:
+                    raise HTTPException(
+                        status_code=400, detail="Cannot remove primary email"
+                    )
+                found = True
+                break
+
+        if not found:
+            raise HTTPException(status_code=400, detail="Email not found")
+
+        accounts.update_one(
+            {"_id": account_id}, {"$pull": {"emails": {"address": email}}}
+        )
 
     @staticmethod
     async def get_session_from_response(response: Response) -> str:
@@ -100,8 +143,16 @@ class AccountHelper:
             "ip": get_client_ip(request),
             "created_at": datetime.now().timestamp(),
             "last_used": datetime.now().timestamp(),
-            "expires_at": datetime.now().timestamp() + 86400 * 30,  # 30 days
+            "expires_at": datetime.now().timestamp() + 5,  # 86400 * 30,  # 30 days
         }
+
+        # Create an index to delete expired sessions if it doesn't exist
+        if "sessions.expires_at" not in accounts.index_information():
+            accounts.create_index(
+                "sessions.expires_at",
+                expireAfterSeconds=0,
+                partialFilterExpression={"sessions.expires_at": {"$exists": True}},
+            )
 
         accounts.update_one({"_id": account_id}, {"$push": {"sessions": session}})
 
@@ -115,11 +166,13 @@ class AccountHelper:
         # Remove sensitive fields
         del public_account["password"]
 
-        # REDACT the session ids (for security)
-        public_sessions = []
+        # Find and mark the current session as current: True
         for session in public_account["sessions"]:
-            session["_id"] = "REDACTED FOR SECURITY"
-            public_sessions.append(session)
-        public_account["sessions"] = public_sessions
+            if session["last_used"] == max(
+                [session["last_used"] for session in public_account["sessions"]]
+            ):
+                session["current"] = True
+            else:
+                session["current"] = False
 
         return public_account
