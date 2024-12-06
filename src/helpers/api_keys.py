@@ -11,7 +11,7 @@ from datetime import datetime
 import uuid
 
 # Third-Party Imports
-from fastapi import HTTPException
+from fastapi.exceptions import HTTPException
 
 # Database Imports
 from db import accounts, api_keys
@@ -124,6 +124,8 @@ class APIKeyHelper:
         key = api_keys.find_one({"_id": key_id})
         if not key:
             raise HTTPException(status_code=404, detail="API key not found")
+
+        print(key.get("roles", []))
 
         if "*" in key.get("roles", []):
             return True
