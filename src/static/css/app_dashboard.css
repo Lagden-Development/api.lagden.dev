@@ -10,9 +10,9 @@
     inset: -1px;
     background: linear-gradient(
         to bottom right,
-        rgba(139, 92, 246, 0.1),
-        /* violet-500 */ rgba(217, 70, 239, 0.1),
-        /* fuchsia-500 */ rgba(244, 63, 94, 0.1) /* rose-500 */
+        rgba(139 92 246 / 1%),
+        /* violet-500 */ rgba(217 70 239 / 1%),
+        /* fuchsia-500 */ rgba(244 63 94 / 1%) /* rose-500 */
     );
     border-radius: inherit;
     z-index: -2;
@@ -34,9 +34,9 @@
 .card-glow:hover::before {
     background: linear-gradient(
         to bottom right,
-        rgba(139, 92, 246, 0.2),
-        rgba(217, 70, 239, 0.2),
-        rgba(244, 63, 94, 0.2)
+        rgb(139 92 246 / 2%),
+        rgb(217 70 239 / 2%),
+        rgb(244 63 94 / 2%)
     );
 }
 
@@ -45,6 +45,7 @@
     0% {
         background-position: -1000px 0;
     }
+    
     100% {
         background-position: 1000px 0;
     }
@@ -54,9 +55,9 @@
     display: inline-block;
     background: linear-gradient(
         90deg,
-        rgba(255, 255, 255, 0.03) 25%,
-        rgba(255, 255, 255, 0.08) 37%,
-        rgba(255, 255, 255, 0.03) 63%
+        rgb(255 255 255 / 3%) 25%,
+        rgb(255 255 255 / 8%) 37%,
+        rgb(255 255 255 / 3%) 63%
     );
     background-size: 1000px 100%;
     animation: shimmer 2s infinite linear;
@@ -111,7 +112,7 @@ a:hover .external-link {
     height: 2px;
     bottom: -2px;
     left: 0;
-    background: linear-gradient(to right, rgb(139, 92, 246), rgb(217, 70, 239));
+    background: linear-gradient(to right, rgb(139 92 246), rgb(217 70 239));
     transition: width 0.3s ease;
 }
 
@@ -125,7 +126,7 @@ a:hover .external-link {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (width > 768px) {
     table {
         display: block;
         overflow-x: auto;
