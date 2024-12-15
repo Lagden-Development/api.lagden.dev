@@ -52,20 +52,23 @@ class Link(BaseModel):
     url: str
     name: str
 
+
 class MonitorStatus(BaseModel):
     """
     Represents the status information from BetterStack monitor.
-    
+
     Attributes:
         status (str): Current status of the service (up/down)
         last_checked_at (datetime): When the status was last checked
         url (str): URL being monitored
         pronounceable_name (str): Human-readable name of the monitor
     """
+
     status: str
     last_checked_at: datetime
     url: str
     pronounceable_name: str
+
 
 class Person(BaseModel):
     """
@@ -111,6 +114,7 @@ class Project(BaseModel):
         is_featured (bool): Whether the project is featured
         status (Optional[MonitorStatus]): Current status information from BetterStack
     """
+
     title: str
     slug: str
     description: str
@@ -166,13 +170,14 @@ client = contentful.Client(
     access_token=os.getenv("CONTENTFUL_ACCESS_TOKEN"),
 )
 
+
 async def get_betterstack_status(monitor_id: str) -> Optional[MonitorStatus]:
     """
     Fetch status information from BetterStack API for a specific monitor.
-    
+
     Args:
         monitor_id (str): The monitor ID to fetch status for
-        
+
     Returns:
         Optional[MonitorStatus]: Status information if available, None otherwise
     """
@@ -185,31 +190,38 @@ async def get_betterstack_status(monitor_id: str) -> Optional[MonitorStatus]:
         async with httpx.AsyncClient() as client:
             response = await client.get(
                 "https://uptime.betterstack.com/api/v2/monitors",
-                headers={"Authorization": f"Bearer {api_token}"}
+                headers={"Authorization": f"Bearer {api_token}"},
             )
-            
+
             if response.status_code != 200:
-                logger.error(f"BetterStack API error: {response.status_code} - {response.text}")
+                logger.error(
+                    f"BetterStack API error: {response.status_code} - {response.text}"
+                )
                 return None
 
             monitors = response.json()["data"]
-            
+
             # Find the monitor with matching ID
             for monitor in monitors:
                 if monitor["id"] == monitor_id:
                     return MonitorStatus(
                         status=monitor["attributes"]["status"],
-                        last_checked_at=datetime.fromisoformat(monitor["attributes"]["last_checked_at"].replace("Z", "+00:00")),
+                        last_checked_at=datetime.fromisoformat(
+                            monitor["attributes"]["last_checked_at"].replace(
+                                "Z", "+00:00"
+                            )
+                        ),
                         url=monitor["attributes"]["url"],
-                        pronounceable_name=monitor["attributes"]["pronounceable_name"]
+                        pronounceable_name=monitor["attributes"]["pronounceable_name"],
                     )
-            
+
             logger.warning(f"Monitor ID {monitor_id} not found in BetterStack response")
             return None
 
     except Exception as e:
         logger.error(f"Error fetching BetterStack status: {str(e)}")
         return None
+
 
 def format_person(entry) -> Person:
     """Format a Contentful person entry into our Person model."""
@@ -234,7 +246,7 @@ def format_person(entry) -> Person:
 def format_project(entry) -> Project:
     """Format a Contentful project entry into our Project model."""
     fields = entry.raw["fields"]
-    
+
     return Project(
         title=entry.title,
         slug=entry.slug,
@@ -246,7 +258,7 @@ def format_project(entry) -> Project:
         picture_url=entry.picture.url(),
         better_stack_status_id=fields.get("betterStackStatusId", None),
         is_featured=fields.get("isFeatured", False),
-        status=None  # Will be populated later if available
+        status=None,  # Will be populated later if available
     )
 
 
@@ -519,21 +531,22 @@ async def get_project(
         entries = client.entries({"content_type": "project", "fields.slug": slug})
         if not entries:
             raise HTTPException(status_code=404, detail="Project not found")
-        
+
         project = format_project(entries[0])
-        
+
         # If project has a BetterStack status ID, fetch the status
         if project.better_stack_status_id:
-            project.status = await get_betterstack_status(project.better_stack_status_id)
-        
+            project.status = await get_betterstack_status(
+                project.better_stack_status_id
+            )
+
         return project
 
     except Exception as e:
         status_code = getattr(e, "status_code", 500)
         error_message = str(e)
         raise HTTPException(
-            status_code=status_code,
-            detail=f"Error fetching project: {str(e)}"
+            status_code=status_code, detail=f"Error fetching project: {str(e)}"
         ) from e
     finally:
         background_tasks.add_task(
