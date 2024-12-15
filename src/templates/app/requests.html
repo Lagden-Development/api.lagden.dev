@@ -1,18 +1,16 @@
-{# templates/app/requests.html #}
-{% extends "base.html" %}
-{% block title %}API Requests - lagden.dev{% endblock %}
-
-{% block extra_css %}
+{# templates/app/requests.html #} {% extends "base.html" %} {% block title %}API Requests -
+lagden.dev{% endblock %} {% block extra_css %}
 <link rel="stylesheet" href="/static/css/app_dashboard.css" />
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="mb-12">
         <div class="flex items-center justify-between">
             <div>
                 <div class="flex items-center space-x-4 mb-4">
-                    <a href="/app" class="text-zinc-400 hover:text-white transition-colors flex items-center space-x-2">
+                    <a
+                        href="/app"
+                        class="text-zinc-400 hover:text-white transition-colors flex items-center space-x-2"
+                    >
                         <i data-lucide="arrow-left" class="w-4 h-4"></i>
                         <span>Back to Dashboard</span>
                     </a>
@@ -23,7 +21,9 @@
         </div>
     </div>
 
-    <div class="card-glow bg-zinc-900/30 rounded-xl backdrop-blur-sm border border-white/5 overflow-hidden">
+    <div
+        class="card-glow bg-zinc-900/30 rounded-xl backdrop-blur-sm border border-white/5 overflow-hidden"
+    >
         <table class="w-full">
             <thead>
                 <tr class="border-b border-white/5">
@@ -37,7 +37,9 @@
                 {% for i in range(10) %}
                 <tr class="border-b border-white/5">
                     <td class="py-4 px-6"><span class="skeleton-loader w-48 h-5"></span></td>
-                    <td class="py-4 px-6"><span class="skeleton-loader w-16 h-7 rounded-full"></span></td>
+                    <td class="py-4 px-6">
+                        <span class="skeleton-loader w-16 h-7 rounded-full"></span>
+                    </td>
                     <td class="py-4 px-6"><span class="skeleton-loader w-12 h-5"></span></td>
                     <td class="py-4 px-6"><span class="skeleton-loader w-24 h-5"></span></td>
                 </tr>
@@ -53,8 +55,6 @@
         </div>
     </div>
 </main>
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script src="/static/js/app_requests.js"></script>
 {% endblock %}

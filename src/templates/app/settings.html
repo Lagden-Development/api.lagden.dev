@@ -1,16 +1,14 @@
-{# templates/app/settings.html #}
-{% extends "base.html" %}
-{% block title %}Settings - lagden.dev{% endblock %}
-
-{% block extra_css %}
+{# templates/app/settings.html #} {% extends "base.html" %} {% block title %}Settings - lagden.dev{%
+endblock %} {% block extra_css %}
 <link rel="stylesheet" href="/static/css/app_dashboard.css" />
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="mb-12">
         <div class="flex items-center space-x-4 mb-4">
-            <a href="/app" class="text-zinc-400 hover:text-white transition-colors flex items-center space-x-2">
+            <a
+                href="/app"
+                class="text-zinc-400 hover:text-white transition-colors flex items-center space-x-2"
+            >
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
                 <span>Back to Dashboard</span>
             </a>
@@ -30,15 +28,32 @@
                         <h3 class="text-lg font-medium">Name</h3>
                         <p class="text-zinc-400 text-sm mt-1" id="currentName">Loading...</p>
                     </div>
-                    <button onclick="toggleNameEdit()" class="text-violet-400 hover:text-violet-300 transition-colors">
+                    <button
+                        onclick="toggleNameEdit()"
+                        class="text-violet-400 hover:text-violet-300 transition-colors"
+                    >
                         <i data-lucide="edit-2" class="w-5 h-5"></i>
                     </button>
                 </div>
                 <div id="nameEditForm" class="hidden space-y-4">
-                    <input type="text" id="nameInput" class="w-full bg-zinc-800/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500">
+                    <input
+                        type="text"
+                        id="nameInput"
+                        class="w-full bg-zinc-800/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+                    />
                     <div class="flex space-x-4">
-                        <button onclick="updateName()" class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors">Save</button>
-                        <button onclick="toggleNameEdit()" class="text-zinc-400 hover:text-zinc-300 px-4 py-2 rounded-lg transition-colors">Cancel</button>
+                        <button
+                            onclick="updateName()"
+                            class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            Save
+                        </button>
+                        <button
+                            onclick="toggleNameEdit()"
+                            class="text-zinc-400 hover:text-zinc-300 px-4 py-2 rounded-lg transition-colors"
+                        >
+                            Cancel
+                        </button>
                     </div>
                 </div>
 
@@ -48,15 +63,32 @@
                         <h3 class="text-lg font-medium">Organization</h3>
                         <p class="text-zinc-400 text-sm mt-1" id="currentOrg">Loading...</p>
                     </div>
-                    <button onclick="toggleOrgEdit()" class="text-violet-400 hover:text-violet-300 transition-colors">
+                    <button
+                        onclick="toggleOrgEdit()"
+                        class="text-violet-400 hover:text-violet-300 transition-colors"
+                    >
                         <i data-lucide="edit-2" class="w-5 h-5"></i>
                     </button>
                 </div>
                 <div id="orgEditForm" class="hidden space-y-4">
-                    <input type="text" id="orgInput" class="w-full bg-zinc-800/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500">
+                    <input
+                        type="text"
+                        id="orgInput"
+                        class="w-full bg-zinc-800/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+                    />
                     <div class="flex space-x-4">
-                        <button onclick="updateOrg()" class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors">Save</button>
-                        <button onclick="toggleOrgEdit()" class="text-zinc-400 hover:text-zinc-300 px-4 py-2 rounded-lg transition-colors">Cancel</button>
+                        <button
+                            onclick="updateOrg()"
+                            class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            Save
+                        </button>
+                        <button
+                            onclick="toggleOrgEdit()"
+                            class="text-zinc-400 hover:text-zinc-300 px-4 py-2 rounded-lg transition-colors"
+                        >
+                            Cancel
+                        </button>
                     </div>
                 </div>
             </div>
@@ -70,7 +102,10 @@
             <div class="space-y-6" id="emailList">
                 <!-- Email list will be populated by JavaScript -->
             </div>
-            <button onclick="showAddEmailForm()" class="mt-6 flex items-center space-x-2 text-violet-400 hover:text-violet-300 transition-colors">
+            <button
+                onclick="showAddEmailForm()"
+                class="mt-6 flex items-center space-x-2 text-violet-400 hover:text-violet-300 transition-colors"
+            >
                 <i data-lucide="plus" class="w-5 h-5"></i>
                 <span>Add Email Address</span>
             </button>
@@ -80,14 +115,24 @@
     <!-- Active Sessions -->
     <div class="mb-12">
         <h2 class="text-2xl font-semibold mb-6">Active Sessions</h2>
-        <div class="card-glow bg-zinc-900/30 rounded-xl backdrop-blur-sm border border-white/5 overflow-hidden">
+        <div
+            class="card-glow bg-zinc-900/30 rounded-xl backdrop-blur-sm border border-white/5 overflow-hidden"
+        >
             <table class="w-full">
                 <thead>
                     <tr class="border-b border-white/5">
-                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">IP Address</th>
-                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Last Used</th>
-                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">Created</th>
-                        <th class="text-right py-4 px-6 text-sm font-medium text-zinc-400">Actions</th>
+                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">
+                            IP Address
+                        </th>
+                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">
+                            Last Used
+                        </th>
+                        <th class="text-left py-4 px-6 text-sm font-medium text-zinc-400">
+                            Created
+                        </th>
+                        <th class="text-right py-4 px-6 text-sm font-medium text-zinc-400">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="sessionsTable">
@@ -107,7 +152,10 @@
                         <h3 class="text-lg font-medium">Password</h3>
                         <p class="text-zinc-400 text-sm mt-1">Change your account password</p>
                     </div>
-                    <button onclick="showChangePasswordForm()" class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <button
+                        onclick="showChangePasswordForm()"
+                        class="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-colors"
+                    >
                         Change Password
                     </button>
                 </div>
@@ -118,8 +166,6 @@
 
 <!-- Toast Messages Container -->
 <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2"></div>
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script src="/static/js/app_settings.js"></script>
 {% endblock %}

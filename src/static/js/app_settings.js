@@ -7,7 +7,7 @@ async function fetchUserData() {
         const response = await $.ajax({
             url: '/api/me',
             method: 'GET',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (response.status === 'success') {
@@ -43,9 +43,10 @@ function loadEmails() {
     const emailList = document.getElementById('emailList');
     emailList.innerHTML = '';
 
-    userData.emails.forEach(email => {
+    userData.emails.forEach((email) => {
         const emailDiv = document.createElement('div');
-        emailDiv.className = 'flex items-center justify-between py-4 border-b border-white/5 last:border-0';
+        emailDiv.className =
+            'flex items-center justify-between py-4 border-b border-white/5 last:border-0';
         emailDiv.innerHTML = `
             <div>
                 <div class="flex items-center space-x-2">
@@ -55,14 +56,18 @@ function loadEmails() {
                 </div>
             </div>
             <div class="flex items-center space-x-4">
-                ${!email.primary ? `
+                ${
+                    !email.primary
+                        ? `
                     <button onclick="setPrimaryEmail('${email.address}')" class="text-sm text-violet-400 hover:text-violet-300 transition-colors">
                         Make Primary
                     </button>
                     <button onclick="removeEmail('${email.address}')" class="text-sm text-rose-400 hover:text-rose-300 transition-colors">
                         Remove
                     </button>
-                ` : ''}
+                `
+                        : ''
+                }
             </div>
         `;
         emailList.appendChild(emailDiv);
@@ -73,10 +78,10 @@ function loadSessions() {
     const sessionsTable = document.getElementById('sessionsTable');
     sessionsTable.innerHTML = '';
 
-    userData.sessions.forEach(session => {
+    userData.sessions.forEach((session) => {
         const row = document.createElement('tr');
         row.className = 'border-b border-white/5 last:border-0';
-        
+
         // Add a subtle background to the current session
         if (session.current) {
             row.classList.add('bg-violet-500/5');
@@ -131,7 +136,7 @@ async function updateName() {
         const response = await $.ajax({
             url: `/api/me/details/name/${encodeURIComponent(newName)}`,
             method: 'PATCH',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (response.status === 'success') {
@@ -166,7 +171,7 @@ async function updateOrg() {
         const response = await $.ajax({
             url: `/api/me/details/org/${encodeURIComponent(newOrg)}`,
             method: 'PATCH',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (response.status === 'success') {
@@ -187,7 +192,7 @@ async function updateOrg() {
 /* exported deleteSession */
 async function deleteSession(sessionId) {
     // Check if trying to delete current session (shouldn't be possible from UI, but adding as safety)
-    const session = userData.sessions.find(s => s._id === sessionId);
+    const session = userData.sessions.find((s) => s._id === sessionId);
     if (session?.current) {
         toastr.error('Cannot delete current session');
         return;
@@ -197,11 +202,11 @@ async function deleteSession(sessionId) {
         const response = await $.ajax({
             url: `/api/me/sessions/${sessionId}`,
             method: 'DELETE',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (response.status === 'success') {
-            userData.sessions = userData.sessions.filter(session => session._id !== sessionId);
+            userData.sessions = userData.sessions.filter((session) => session._id !== sessionId);
             loadSessions();
             toastr.success('Session deleted successfully');
         } else {
@@ -241,7 +246,7 @@ function showChangePasswordForm() {
 function togglePasswordVisibility(inputId, buttonId) {
     const input = document.getElementById(inputId);
     const button = document.getElementById(buttonId);
-    
+
     if (input.type === 'password') {
         input.type = 'text';
         button.innerHTML = '<i data-lucide="eye-off" class="w-5 h-5"></i>';
@@ -249,7 +254,7 @@ function togglePasswordVisibility(inputId, buttonId) {
         input.type = 'password';
         button.innerHTML = '<i data-lucide="eye" class="w-5 h-5"></i>';
     }
-    
+
     lucide.createIcons();
 }
 
@@ -271,9 +276,9 @@ function confirmAction(message, onConfirm) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(confirmDialog);
-    
+
     confirmDialog.querySelector('.confirm-button').addEventListener('click', () => {
         onConfirm();
         confirmDialog.remove();
@@ -306,13 +311,13 @@ document.addEventListener('DOMContentLoaded', () => {
     toastr.options = {
         closeButton: true,
         progressBar: true,
-        positionClass: "toast-bottom-right",
-        timeOut: 3000
+        positionClass: 'toast-bottom-right',
+        timeOut: 3000,
     };
-    
+
     fetchUserData();
     startSessionRefresh();
-    
+
     // Add event listeners for form submissions
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
@@ -321,10 +326,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('orgEditForm').classList.add('hidden');
         }
     });
-    
+
     // Initialize form inputs
     const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 const form = input.closest('div');

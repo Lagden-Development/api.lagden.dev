@@ -27,7 +27,7 @@ function createRequestRow(request) {
         GET: 'bg-emerald-500/10 text-emerald-300',
         POST: 'bg-violet-500/10 text-violet-300',
         PUT: 'bg-amber-500/10 text-amber-300',
-        DELETE: 'bg-rose-500/10 text-rose-300'
+        DELETE: 'bg-rose-500/10 text-rose-300',
     };
 
     const statusColor = request.status_code < 400 ? 'text-emerald-400' : 'text-rose-400';
@@ -64,25 +64,25 @@ async function fetchLogs() {
         const response = await $.ajax({
             url: `/api/me/all-api-logs/${LIMIT}/${currentSkip}`,
             method: 'GET',
-            dataType: 'json'
+            dataType: 'json',
         });
 
         if (response.status === 'success') {
             const tableBody = document.getElementById('requestsTableBody');
-            
+
             // Clear skeleton loaders if this is the first load
             if (currentSkip === 0) {
                 tableBody.innerHTML = '';
             }
 
             // Append new rows
-            response.data.forEach(log => {
+            response.data.forEach((log) => {
                 tableBody.insertAdjacentHTML('beforeend', createRequestRow(log));
             });
 
             // Update state
             currentSkip += LIMIT;
-            
+
             // Check if we have more items to load
             if (response.data.length < LIMIT) {
                 hasMore = false;
@@ -92,9 +92,9 @@ async function fetchLogs() {
                 const peekResponse = await $.ajax({
                     url: `/api/me/all-api-logs/${LIMIT}/${currentSkip}`,
                     method: 'GET',
-                    dataType: 'json'
+                    dataType: 'json',
                 });
-                
+
                 if (peekResponse.data.length === 0) {
                     hasMore = false;
                     document.getElementById('noMoreRequests').classList.remove('hidden');
@@ -103,7 +103,7 @@ async function fetchLogs() {
 
             // Show new items with fade-in animation
             setTimeout(() => {
-                document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+                document.querySelectorAll('.fade-in').forEach((el) => el.classList.add('visible'));
             }, 100);
         } else {
             toastr.error(response.message);
@@ -134,7 +134,7 @@ function handleScroll() {
 document.addEventListener('DOMContentLoaded', () => {
     // Initial load
     fetchLogs();
-    
+
     // Set up infinite scroll
     window.addEventListener('scroll', handleScroll);
 });

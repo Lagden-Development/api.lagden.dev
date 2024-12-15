@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
 
             if (data.status === 'success') {
-                window.location.href = escape("/login")
+                window.location.href = escape('/login');
             } else {
                 throw new Error(data.message || 'Signup failed');
             }

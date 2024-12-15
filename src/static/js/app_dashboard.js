@@ -15,7 +15,7 @@ const dashboardData = {
             value: 0,
             trend: '',
             isIncrease: true,
-            percentage: 0
+            percentage: 0,
         },
     },
     recentRequests: [],
@@ -60,7 +60,7 @@ async function fetchDashboardData() {
             const { total, this_month, last_month } = totalLogsResponse.data;
             const difference = this_month - last_month;
             let percentageChange = 0;
-            
+
             if (last_month === 0 && this_month > 0) {
                 // Handle case where last month was 0
                 percentageChange = this_month * 100;
@@ -74,7 +74,7 @@ async function fetchDashboardData() {
                 value: Math.abs(difference),
                 isIncrease: difference >= 0,
                 percentage: Math.abs(Math.round(percentageChange)),
-                trend: `${difference >= 0 ? '↑' : '↓'} ${Math.abs(Math.round(percentageChange))}% from last month`
+                trend: `${difference >= 0 ? '↑' : '↓'} ${Math.abs(Math.round(percentageChange))}% from last month`,
             };
         } else {
             toastr.error(totalLogsResponse.message);
@@ -171,8 +171,7 @@ function loadDashboardData() {
     // Update stats using IDs
     document.getElementById('totalRequests').outerHTML =
         `<h3 class="text-2xl font-bold">${dashboardData.stats.totalRequests.toLocaleString()}</h3>`;
-    document.getElementById('requestGrowth').outerHTML =
-        `<div class="text-sm text-zinc-400">
+    document.getElementById('requestGrowth').outerHTML = `<div class="text-sm text-zinc-400">
             <span class="${dashboardData.stats.requestGrowth.isIncrease ? 'text-emerald-400' : 'text-rose-400'}">
                 ${dashboardData.stats.requestGrowth.trend}
             </span>
