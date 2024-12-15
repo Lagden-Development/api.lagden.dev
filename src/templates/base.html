@@ -42,6 +42,11 @@
         {% include 'components/navbar.html' %} {% block content %}{% endblock %} {% include
         'components/footer.html' %}
 
+        <script>
+            // Initialize Lucide icons
+            lucide.createIcons();
+        </script>
+
         <script src="/static/js/shared.js"></script>
         {% block scripts %}{% endblock %}
     </body>

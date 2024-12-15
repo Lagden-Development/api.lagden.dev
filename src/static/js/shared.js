@@ -1,4 +1,4 @@
-/* global lucide, toastr, $ */
+/* global toastr, $ */
 
 // static/js/shared.js
 
@@ -8,9 +8,6 @@ toastr.options = {
     progressBar: true,
     positionClass: 'toast-bottom-right',
 };
-
-// Initialize Lucide icons
-lucide.createIcons();
 
 // Utility function for handling error messages
 /* exported showError */
@@ -53,11 +50,11 @@ function handleLogout() {
         url: '/api/accounts/logout',
         method: 'POST',
         xhrFields: {
-            withCredentials: true, // Include cookies in the request
+            withCredentials: true,
         },
         success: function (response) {
             console.log(response.message);
-            window.location.href = '/';
+            window.location.href = escape('/');
         },
         error: function (xhr, status, error) {
             const errorMessage = xhr.responseJSON?.detail || 'Logout failed. Please try again.';
