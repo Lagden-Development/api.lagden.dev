@@ -1,68 +1,424 @@
-/* API Keys specific styles */
-.key-secret {
-    -webkit-text-security: disc;
+/* Card and container effects */
+.card-glow {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.key-secret.visible {
-    -webkit-text-security: none;
+.card-glow::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.05),
+        rgba(217, 70, 239, 0.05),
+        rgba(244, 63, 94, 0.05)
+    );
+    border-radius: inherit;
+    z-index: -2;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgb(0 0 0 / 70%);
-    backdrop-filter: blur(4px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
+.card-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    z-index: -1;
 }
 
-.modal.active {
-    display: flex;
+.card-glow:hover::before {
+    background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.1),
+        rgba(217, 70, 239, 0.1),
+        rgba(244, 63, 94, 0.1)
+    );
 }
 
-.modal-content {
-    animation: modal-slide-in 0.3s ease;
-}
-
-@keyframes modal-slide-in {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
+/* Role badges */
 .role-badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.75rem;
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 500;
     transition: all 0.2s;
+    letter-spacing: 0.025em;
 }
 
 .role-badge.default {
-    background-color: rgb(139 92 246 / 10%);
-    color: rgb(167 139 250);
+    background: linear-gradient(to right, rgba(139, 92, 246, 0.1), rgba(167, 139, 250, 0.1));
+    color: rgb(167, 139, 250);
+    border: 1px solid rgba(167, 139, 250, 0.2);
 }
 
 .role-badge.cms {
-    background-color: rgb(236 72 153 / 10%);
+    background: linear-gradient(to right, rgba(236, 72, 153, 0.1), rgba(244, 114, 182, 0.1));
     color: rgb(244, 114, 182);
+    border: 1px solid rgba(244, 114, 182, 0.2);
+}
+
+.role-badge.* {
+    background: linear-gradient(to right, rgba(34, 197, 94, 0.1), rgba(74, 222, 128, 0.1));
+    color: rgb(74, 222, 128);
+    border: 1px solid rgba(74, 222, 128, 0.2);
 }
 
 .roles-container {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+/* Modal Base Styles */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    padding: 1rem;
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: rgb(24 24 27);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 512px;
+    animation: modal-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.modal-content.modal-sm {
+    max-width: 400px;
+}
+
+.modal-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    line-height: 1.3;
+}
+
+.modal-description {
+    color: rgb(161 161 170);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.modal-close {
+    color: rgb(161 161 170);
+    padding: 0.5rem;
+    margin: -0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+}
+
+.modal-close:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(244 244 245);
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: rgb(139 92 246);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.input-help {
+    display: block;
+    color: rgb(113 113 122);
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(to right, rgb(139 92 246), rgb(217 70 239));
+    color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: rgb(161 161 170);
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-danger {
+    background: rgb(239 68 68);
+    color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.btn-danger:hover {
+    background: rgb(220 38 38);
+    transform: translateY(-1px);
+}
+
+/* Delete Warning */
+.delete-warning {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgb(239 68 68 / 0.1);
+    border-radius: 0.5rem;
+    color: rgb(252 165 165);
+    margin-bottom: 1rem;
+}
+
+.delete-warning p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.key-preview {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.key-label {
+    color: rgb(161 161 170);
+    margin-right: 0.5rem;
+}
+
+.key-value {
+    color: white;
+    font-weight: 500;
+}
+
+/* Key Visibility */
+.key-secret {
+    -webkit-text-security: disc;
+}
+
+/* Key Toggle Animation */
+.key-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.key-toggle i {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.key-toggle:hover i {
+    transform: scale(1.1);
+}
+
+.key-toggle.visible i {
+    transform: rotate(180deg);
+}
+
+/* Animations */
+@keyframes modal-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal.active .modal-content {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+/* Fade animations */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+/* Icon button base styles */
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: rgb(161, 161, 170);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    position: relative;
+}
+
+.icon-button:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.icon-button:active {
+    transform: translateY(0);
+}
+
+/* Icon stack handling */
+.icon-stack {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-stack i {
+    position: absolute;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-stack i:not(.hidden) {
+    animation: icon-bounce 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Copy button states */
+.icon-button.copy-success {
+    color: rgb(34, 197, 94);
+    background: rgb(34 197 94 / 0.1);
+}
+
+.icon-button.copy-error {
+    color: rgb(239, 68, 68);
+    background: rgb(239 68 68 / 0.1);
+}
+
+/* Visibility toggle styles */
+.icon-button.active {
+    color: rgb(139, 92, 246);
+    background: rgb(139 92 246 / 0.1);
+}
+
+.icon-button.active:hover {
+    background: rgb(139 92 246 / 0.15);
+}
+
+/* Animations */
+@keyframes icon-bounce {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.hidden {
+    opacity: 0;
+    transform: scale(0.3);
+    pointer-events: none;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+    .modal-content {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    .role-badge {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.7rem;
+    }
 }

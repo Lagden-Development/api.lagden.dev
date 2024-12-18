@@ -54,7 +54,7 @@ class APIKeyHelper:
 
         current_time = datetime.now().timestamp()
         api_key = {
-            "_id": str(uuid.uuid4()),
+            "_id": "ldevapi-" + str(uuid.uuid4()),
             "description": description,
             "uuid": account_id,
             "uses": 0,
