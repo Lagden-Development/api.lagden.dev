@@ -251,8 +251,17 @@ async def my_total_api_logs(
         for log in logs:
             log_timestamps.append(log["timestamp"])
 
-        current_month = datetime.datetime.now().month
-        last_month = current_month - 1
+        now = datetime.datetime.now()
+        current_month = now.month
+        current_year = now.year
+        
+        # Handle December to January transition
+        if current_month == 1:
+            last_month = 12
+            last_month_year = current_year - 1
+        else:
+            last_month = current_month - 1
+            last_month_year = current_year
 
         logs_this_month = 0
         logs_last_month = 0
@@ -263,13 +272,15 @@ async def my_total_api_logs(
                 log_timestamp, datetime.timezone.utc
             )
 
-            # Get the month of the log
+            # Get the month and year of the log
             log_month = log_datetime.month
+            log_year = log_datetime.year
 
             # Check if the log was created this month
-            if log_month == current_month:
+            if log_month == current_month and log_year == current_year:
                 logs_this_month += 1
-            elif log_month == last_month:
+            # Check if the log was created last month
+            elif log_month == last_month and log_year == last_month_year:
                 logs_last_month += 1
 
         return {
